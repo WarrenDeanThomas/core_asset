@@ -1,0 +1,60 @@
+from datetime import date
+from django.shortcuts import render
+from qr_code.qrcode.utils import MeCard, VCard, EpcData, WifiConfig, Coordinates, QRCodeOptions
+
+{% extends 'partials/base.html' %}
+
+{% block title %} Login Page{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% load qr_code %}
+
+{% block content %}
+
+
+<h3>Add contact '{{ mecard_contact.name }}' to phone book</h3>
+{% qr_for_mecard mecard=mecard_contact size='S' %}
+<p>or:</p>
+{% qr_for_contact mecard_contact size='S' %}
+<p>or:</p>
+{% qr_for_contact mecard_contact options=options_example %}
+
+<h3>Add contact '{{ vcard_contact.name }}' to phone book</h3>
+{% qr_for_vcard vcard=vcard_contact size='S' %}
+<p>or:</p>
+{% qr_for_contact vcard_contact size='S' %}
+<p>or:</p>
+{% qr_for_contact vcard_contact options=options_example %}
+
+<h3>Configure Wi-Fi connexion to '{{ wifi_config.ssid }}'</h3>
+<img src="{% qr_url_for_wifi wifi_config=wifi_config size='T' error_correction='Q' %}">
+<p>or:</p>
+<img src="{% qr_url_for_wifi wifi_config size='T' error_correction='Q' %}">
+<p>or:</p>
+<img src="{% qr_url_for_wifi wifi_config options=options_example %}">
+
+<!--<h3>EPC QR Code'</h3>-->
+<!--<img src="{% qr_url_for_epc epc_data=epc_data %}">-->
+<!--<p>or:</p>-->
+<!--<img src="{% qr_url_for_epc epc_data size='H' %}">-->
+
+<!--<h3>Watch YouTube video '{{ video_id }}'</h3>-->
+<!--{% qr_for_youtube video_id image_format='png' size='T' %}-->
+<!--<p>or:</p>-->
+<!--{% qr_for_youtube video_id options=options_example %}-->
+
+<!--<h3>Open map at location: ({{ geolocation_coordinates }})</h3>-->
+<!--<img src="{% qr_url_for_geolocation coordinates=geolocation_coordinates %}">-->
+<!--<p>or:</p>-->
+<!--<img src="{% qr_url_for_geolocation latitude=geolocation_coordinates.latitude longitude=geolocation_coordinates.longitude altitude=geolocation_coordinates.altitude %}">-->
+<!--<p>or:</p>-->
+<!--<img src="{% qr_url_for_geolocation latitude=geolocation_coordinates.latitude longitude=geolocation_coordinates.longitude altitude=geolocation_coordinates.altitude options=options_example %}">-->
+
+<!--<h3>Open Google Maps App at location: ({{ google_maps_coordinates }})</h3>-->
+<!--{% qr_for_google_maps coordinates=google_maps_coordinates %}-->
+<!--<p>or:</p>-->
+<!--{% qr_for_google_maps latitude=google_maps_coordinates.latitude longitude=google_maps_coordinates.longitude %}-->
+<!--<p>or:</p>-->
+<!--{% qr_for_google_maps latitude=google_maps_coordinates.latitude longitude=google_maps_coordinates.longitude options=options_example %}-->
+{% endblock %}

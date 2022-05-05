@@ -1,0 +1,86 @@
+    {% extends 'partials/base.html' %}
+    {% block title %}Core Page {% endblock %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+{% if user.is_authenticated and user.is_staff and user.is_superuser %}
+
+<!--Tables-->
+<div class="container">
+  <div class="row my-4">
+    <div class="col-md-4">
+        {% for message in messages %}
+        {% if message %}
+        <div class="alert alert-{{ message.tags}}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+<div class="border bg-white p-3">
+<h4>Add core</h4>
+<hr>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+   {{ form|crispy }}
+
+
+  <input class="btn btn-success btn-block" type="submit" value="Add core">
+</form>
+
+</div>
+    </div>
+    <div class="col-md-8">
+      <table class="table caption-top bg-white">
+        <caption>List of cores</caption>
+        <thead class="bg-info">
+          <tr class="text-white">
+            <th scope="col">#</th>
+              <th scope="col">#</th>
+              <th scope="col">ID</th>
+            <th scope="col">Owner</th>
+            <th scope="col">Type</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+<!--              <th scope="col">Photo</th>-->
+<!--              <th scope="col">Photo</th>-->
+              <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for core in cores %}
+          <tr>
+            <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'core-core_detail' core.id %}">View</a></th>
+              <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'core-core_history' core.id %}">History</a></th>
+              <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'core-core_history_add' core.id %}">Add History</a></th>
+              <td>{{ core.id }}</td>
+              <td>{{ core.owner }}</td>
+              <td>{{ core.type }}</td>
+              <td>{{ core.name }}</td>
+              <td>{{ core.description }}</td>
+<!--              <td>{{ core.main_img}}</td>-->
+<!--              <td>{{ core.main_img }}</td>-->
+            <td>
+              <a class="btn btn-info btn-sm" href="{% url 'core-core_update' core.id %}">Edit</a>
+              <a class="btn btn-danger btn-sm" href="{% url 'core-core_delete' core.id %}">Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+<!--End Tables-->
+
+    {% else %}
+
+{% include 'core/core_user.html' %}
+
+    {% endif %}
+
+
+{% endblock %}

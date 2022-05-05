@@ -1,0 +1,41 @@
+    {% extends 'partials/base.html' %}
+    {% block title %}core History Page {% endblock %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+ {% if user.is_authenticated and user.is_staff and user.is_superuser %}
+
+
+<!--Tables-->
+<div class="container">
+  <div class="row my-4">
+    <div class="col-md-4">
+        {% for message in messages %}
+        {% if message %}
+        <div class="alert alert-{{ message.tags}}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+<div class="border bg-white p-3">
+<h4>Add Event</h4>
+<hr>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+   {{ form1|crispy }}
+
+
+
+  <input class="btn btn-success btn-block" type="submit" value="Add core">
+</form>
+
+    {% else %}
+
+{% include 'core/core_history_user.html' %}
+
+    {% endif %}
+
+
+{% endblock %}

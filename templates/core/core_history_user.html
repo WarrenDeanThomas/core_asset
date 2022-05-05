@@ -1,0 +1,80 @@
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<!--Tables-->
+<!--<div class="container">-->
+<!--  <div class="row my-4">-->
+<!--    <div class="col-md-4">-->
+<!--        {% for message in messages %}-->
+<!--        {% if message %}-->
+<!--        <div class="alert alert-{{ message.tags}}">-->
+<!--            {{ message }}-->
+<!--        </div>-->
+<!--        {% endif %}-->
+<!--        {% endfor %}-->
+<!--<div class="border bg-white p-3">-->
+<!--<h4>Add Event</h4>-->
+<!--<hr>-->
+<!--<form method="POST" enctype="multipart/form-data">-->
+<!--    {% csrf_token %}-->
+<!--    {{ form|crispy }}-->
+<!--   {{ form1|crispy }}-->
+
+
+
+<!--  <input class="btn btn-success btn-block" type="submit" value="Add core">-->
+<!--</form>-->
+<!--&lt;!&ndash; {% if uploaded_file_url %}&ndash;&gt;-->
+<!--&lt;!&ndash;    <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>&ndash;&gt;-->
+<!--&lt;!&ndash;  {% endif %}&ndash;&gt;-->
+<!--</div>-->
+<!--    </div>-->
+    <div class="col-md-8">
+      <table class="table caption-top bg-white">
+        <caption>core History</caption>
+        <thead class="bg-info">
+          <tr class="text-white">
+            <th scope="col">#</th>
+              <th scope="col">ID</th>
+              <th scope="col">Owner</th>
+            <th scope="col">Name</th>
+              <th scope="col">Descriptione</th>
+            <th scope="col">File</th>
+<!--              <th scope="col">Mileage</th>-->
+<!--              <th scope="col">Photo</th>-->
+              <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for core in core_history %}
+        {% if core.core.owner == user %}
+          <tr>
+            <th scope="row"><a class="btn btn-info btn-sm" href="">View</a></th>
+
+              <td>{{ core.id }}</td>
+              <td>{{ core.core_id }}</td>
+              <td>{{ core.core.owner }}</td>
+            <td>{{ core.core.name }}</td>
+            <td>{{ core.event_desc }}</td>
+            <td>{{ core.file }}</td>
+<!--              <td>{{ core.core_history.id }}</td>-->
+<!--              <td>{{ core.registration }}</td>-->
+<!--              <td>{{ core.mileage }}</td>-->
+<!--              <td>{{ core.main_img }}</td>-->
+            <td>
+<!--              <a class="btn btn-info btn-sm" href="{% url 'core-core_update' core.id %}">Edit</a>-->
+<!--              <a class="btn btn-danger btn-sm" href="{% url 'core-core_delete' core.id %}">Delete</a>-->
+            </td>
+          </tr>
+        {% endif %}
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+<!--End Tables-->
+{% endblock %}

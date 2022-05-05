@@ -1,0 +1,75 @@
+    {% extends 'partials/base.html' %}
+    {% block title %}Vehicle History Page {% endblock %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<!--Tables-->
+<div class="container">
+  <div class="row my-4">
+    <div class="col-md-4">
+        {% for message in messages %}
+        {% if message %}
+        <div class="alert alert-{{ message.tags}}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        </div>
+      </div>
+<div class="border bg-white p-3">
+<h4>Add Event</h4>
+<hr>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+   {{ form|crispy }}
+
+<!--   <input type="file" name="file">-->
+<!--  <input class="btn btn-success btn-block" type="submit" value="Add Vehicle">-->
+</form>
+ {% if uploaded_file_url %}
+    <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
+  {% endif %}
+
+  </div>
+<!--    <div class="col-md-8">-->
+<!--      <table class="table caption-top bg-white">-->
+<!--        <caption>Vehicle History</caption>-->
+<!--        <thead class="bg-info">-->
+<!--          <tr class="text-white">-->
+<!--            <th scope="col">#</th>-->
+<!--              <th scope="col">ID</th>-->
+<!--            <th scope="col">Vehicle</th>-->
+<!--            <th scope="col">Event</th>-->
+<!--            <th scope="col">Event Desc</th>-->
+<!--            <th scope="col">File</th>-->
+<!--&lt;!&ndash;              <th scope="col">Mileage</th>&ndash;&gt;-->
+<!--&lt;!&ndash;              <th scope="col">Photo</th>&ndash;&gt;-->
+<!--              <th scope="col">Action</th>-->
+<!--          </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        {% for vehicle in vehicles_history %}-->
+<!--          <tr>-->
+<!--            <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'vehicle-vehicle_history' vehicle.id %}">View</a></th>-->
+<!--              <td>{{ vehicles_history.id }}</td>-->
+<!--            <td>{{ vehicles_history.event }}</td>-->
+<!--            <td>{{ vehicles_history.event_desc }}</td>-->
+<!--            <td>{{ vehicles_history.file }}</td>-->
+<!--&lt;!&ndash;              <td>{{ vehicle.registration }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;              <td>{{ vehicle.mileage }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;              <td>{{ vehicle.main_img }}</td>&ndash;&gt;-->
+<!--            <td>-->
+<!--&lt;!&ndash;              <a class="btn btn-info btn-sm" href="{% url 'vehicle-vehicle_update' vehicle.id %}">Edit</a>&ndash;&gt;-->
+<!--&lt;!&ndash;              <a class="btn btn-danger btn-sm" href="{% url 'vehicle-vehicle_delete' vehicle.id %}">Delete</a>&ndash;&gt;-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--        {% endfor %}-->
+<!--        </tbody>-->
+<!--      </table>-->
+<!--    </div>-->
+<!--  </div>-->
+
+</div>
+<!--End Tables-->
+{% endblock %}

@@ -1,0 +1,104 @@
+
+{% extends 'partials/base.html' %}
+
+{% block title %} Login Page{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% load qr_code %}
+
+{% block content %}
+
+<!--Tables-->
+<div class="container">
+  <div class="row my-4 ">
+<!--    <div class="col-md-2">-->
+
+
+<!--    </div>-->
+<!--    <div class="col-md-8 offset-2 display:flex ">-->
+       <div class="col-md-12 d-flex justify-content-center ">
+    <div class="card">
+      <div class="card-header bg-info text-white">
+        Profile Page
+      </div>
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-md-8 align-center">
+            <span class="h3">core Detail Information</span>
+            <hr>
+
+
+
+
+            <div class="col-md-4">
+                    {{ core.registration }}
+                     <img src="{{ cores.main_img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" />
+            </div>
+
+<!--               <div class="lh-1 text-center">-->
+<!--                    <img src="{% qr_url_from_text core.list size=5 version=1 image_format='png' %}" id="card-qr" alt="">-->
+<!--&lt;!&ndash;                    <div class="text-center"><b>{{core.registration}}</b></div>&ndash;&gt;-->
+<!--                </div>-->
+
+<!--{% qr_from_text "Hello World!" size="m" image_format="png" error_correction="L" %}-->
+
+            <table class="table bg-white table-borderless">
+
+              <tbody>
+                <tr>
+                  <th>Owner</th>
+                  <td>{{ cores.owner }}</td>
+
+                </tr>
+                <tr>
+                  <th>Type</th>
+                  <td>{{ cores.type }}</td>
+
+                </tr>
+                <tr>
+                  <th>Description</th>
+                  <td>{{ cores.description }}</td>
+
+                </tr>
+                <tr>
+                  <th>Name</th>
+                  <td>{{ cores.name }}</td>
+
+                </tr>
+<!--                <tr>-->
+<!--                  <th>Phone</th>-->
+<!--                  <td>{{ cores.model }}</td>-->
+
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                  <th>Address</th>-->
+<!--                  <td>{{ cores.registration }}</td>-->
+
+<!--                </tr>-->
+              </tbody>
+            </table>
+            <div>
+             <p>URL of this page: {{ request.build_absolute_uri }}</p>
+            <p>Site of this page: {{ site }}</p>
+
+              {% qr_from_text  link  size=5 border=6 image_format='png' %}
+            </div>
+          </div>
+          <div class="col-md-4">
+            <img class="img-thumbnail" src=' {% qr_from_text  link  size=20 border=6 %}' alt="">
+<!--            <img class="img-thumbnail" src=" {{ user.profile.image.url }}" alt="">-->
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    </div>
+
+  </div>
+
+</div>
+<!--End Tables-->
+
+{% endblock %}
