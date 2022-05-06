@@ -31,16 +31,18 @@
 <!--&lt;!&ndash;  {% endif %}&ndash;&gt;-->
 <!--</div>-->
 <!--    </div>-->
-    <div class="col-md-8">
-      <table class="table caption-top bg-white">
+    <div class="offset-2 col-md-8 justify-content-center">
+      <table class="table caption-top bg-white mt-5 table table-bordered table-striped text-center">
         <caption>core History</caption>
         <thead class="bg-info">
           <tr class="text-white">
             <th scope="col">#</th>
               <th scope="col">ID</th>
-              <th scope="col">Owner</th>
+              <th scope="col">Owner ID</th>
+              <th scope="col">Owner </th>
             <th scope="col">Name</th>
-              <th scope="col">Descriptione</th>
+              <th scope="col">Event</th>
+              <th scope="col">Description</th>
             <th scope="col">File</th>
 <!--              <th scope="col">Mileage</th>-->
 <!--              <th scope="col">Photo</th>-->
@@ -57,6 +59,7 @@
               <td>{{ core.core_id }}</td>
               <td>{{ core.core.owner }}</td>
             <td>{{ core.core.name }}</td>
+              <td>{{ core.event }}</td>
             <td>{{ core.event_desc }}</td>
             <td>{{ core.file }}</td>
 <!--              <td>{{ core.core_history.id }}</td>-->

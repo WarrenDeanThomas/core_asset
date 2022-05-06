@@ -1,22 +1,22 @@
 <!--Topside-->
 <div class="container">
 <div class="row mt-4">
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-header bg-info text-white">
-          Information
-        </div>
-        <div class="card-body">
-          <marquee behavior="" direction="">
-            <h3 class="my-4" >This is the Information Banner - number of orders - </h3>
-          </marquee>
+<!--    <div class="col-md-4">-->
+<!--      <div class="card">-->
+<!--        <div class="card-header bg-info text-white">-->
+<!--          Information-->
+<!--        </div>-->
+<!--        <div class="card-body">-->
+<!--          <marquee behavior="" direction="">-->
+<!--            <h3 class="my-4" >This is the Information Banner - number of orders - </h3>-->
+<!--          </marquee>-->
 
-        </div>
+<!--        </div>-->
 
-      </div>
+<!--      </div>-->
 
     </div>
-    <div class="col-md-8">
+    <div class="col-md-8 offset-2">
       <div class="card">
         <div class="card-header bg-info text-white">
           Statistics
@@ -26,7 +26,7 @@
          <div class="col-md-4">
            <a class="text-decoration-none text-dark" href="{% url 'core-index' %}">
              <div class="card my-card shadow text-center p-3">
-               <h4>Staff <i class="fa-solid fa-users"></i> </h4>
+               <h4>Users <i class="fa-solid fa-users"></i> </h4>
                <h3>{{ workers_count }}</h3>
              </div>
            </a>
@@ -34,16 +34,16 @@
          <div class="col-md-4">
           <a class="text-decoration-none text-dark" href="">
             <div class="card my-card shadow text-center p-3">
-              <h4>Products <i class="fa-solid fa-box"></i> </h4>
-              <h3>{{ products_count }}</h3>
+              <h4>Animal History <i class="fa-solid fa-box"></i> </h4>
+              <h3>{{ core_history_count }}</h3>
             </div>
           </a>
         </div>
         <div class="col-md-4">
           <a class="text-decoration-none text-dark" href="{% url 'core-core' %}">
             <div class="card my-card shadow text-center p-3">
-              <h4>Vehicles <i class="fa-solid fa-truck-fast"></i> </h4>
-              <h3>{{ vehicles_count }}</h3>
+              <h4><i class="fa-solid fa-cat"></i> Pets <i class="fa-solid fa-dog"></i> </h4>
+              <h3>{{ cores_count }}</h3>
             </div>
           </a>
         </div>

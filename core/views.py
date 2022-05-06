@@ -59,6 +59,7 @@ def indexuser(request):
 def core(request):
     cores = Core.objects.all()
     cores_count = cores.count()
+
     # orders_count = Order.objects.all().count()
     # products_count = Product.objects.all().count()
     if request.method == 'POST':
@@ -66,10 +67,10 @@ def core(request):
         if form.is_valid():
             form.save()
             instance = form.save(commit=False)
-            instance.owner = request.user
+            instance.owner_id = request.user
             instance.save()
             registration = form.cleaned_data.get('registration')
-            messages.success(request, f'{registration} has been added')
+            messages.success(request, f'{instance.name} has been added')
             return redirect('core-core')
     else:
         form = CoreForm()
@@ -167,6 +168,7 @@ def core_history(request, pk):
     # core = Core.objects.all()
     # core_history = get_object_or_404(Core,id=pk)
     core_history = CoreHistory.objects.filter(core_id=pk).select_related('core')
+    core_history_count = CoreHistory.objects.all().count()
     # core_history = CoreHistory.objects.raw('SELECT max(value) AS id FROM mytable GROUP BY id')
     # data = core_history
     # print(core_history.core_id)
@@ -184,12 +186,12 @@ def core_history(request, pk):
             # instance.save()
             # form1.save()
             registration = form1.cleaned_data.get('event')
-            messages.success(request, f'{registration} has been added')
+            messages.success(request, f'{instance.event} has been added')
             return redirect('core-core')
     else:
         form1 = CoreHistoryForm()
 
-    context = {'core_history': core_history, 'form1': form1}
+    context = {'core_history': core_history, 'form1': form1, 'core_history_count': core_history_count}
     return render(request, 'core/core_history.html', context)
 
 

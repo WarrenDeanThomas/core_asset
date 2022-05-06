@@ -1,7 +1,5 @@
 
-{% extends 'partials/base.html' %}
 
-{% block title %} Login Page{% endblock %}
 
 {% load crispy_forms_tags %}
 
@@ -9,7 +7,6 @@
 
 {% block content %}
 
-    {% if user.is_authenticated and user.is_staff and user.is_superuser %}
 <!--Tables-->
 <div class="container col-md-6 d-flex justify-content-center">
   <div class="row my-4 ">
@@ -36,15 +33,15 @@
       </div>
       <div class="card-body ">
         <div class="row">
-          <div class="col-md-8 align-center">
+          <div class="col-md-12 align-center ">
             <span class="h3">Pet Information Card </span>
             <hr>
 
 
 
 
-            <div class="col-md-10">
-                    {{ core.registration }}
+            <div class="col-md-10 ">
+
                      <img src="{{ cores.main_img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" />
             </div>
 
@@ -129,7 +126,7 @@
             </table>
             <div>
              <p>URL of this page: {{ request.build_absolute_uri }}</p>
-            <p>Site of this page: {{ site }}</p>
+<!--            <p>Site of this page: {{ site }}</p>-->
 
               {% qr_from_text  link  size=8 border=6 image_format='png' %}
             </div>
@@ -150,9 +147,4 @@
 </div>
 <!--End Tables-->
 
-    {% else %}
-
-{% include 'core/core_details_user.html' %}
-
-    {% endif %}
 {% endblock %}

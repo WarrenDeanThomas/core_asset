@@ -5,7 +5,9 @@ from .models import Core, CoreHistory
 class CoreForm(forms.ModelForm):
     class Meta:
         model = Core
-        fields = ['type', 'name', 'description', 'main_img']
+        # fields = ['type', 'name', 'description', 'main_img']
+        fields = '__all__'
+        exclude = ['owner']
             # '__all__'
 
 

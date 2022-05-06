@@ -28,21 +28,22 @@
               {% for core in cores %}
             <div class="col-md-4">
               <div class="card mb-4 box-shadow">
-                  <h1>{{ core.owner }} - {{ core.owner }}</h1>
-                  <img src="{{ core.main_img.url }}" class="img-responsive img-thumbnail" style="width: 100% ; float: left; margin-right: 10px;" />
-<!--                  <img class="card-img-top" data-src="{{ 'core.main_img.url' }}" alt="Card image cap">-->
+                  <h1>{{ core.name }} - {{ core.owner }}</h1>
+<!--                  <img src="{{ core.main_img.url }}" class="img-responsive img-thumbnail"  style="width: 50px  height: 50px ; float: left; margin-right: 10px;" />-->
+                  <img src="{{ core.main_img.url }}" class="card-img-top img-thumbnail" alt="Card image cap"/>
                 <div class="card-body">
                   <p class="card-text">{{ core.description }}</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                         <a href="{% url 'core-core_detail' core.id %}" class="btn btn-sm btn-outline-primary" role="button" aria-pressed="true">View </a>
-                        <a href="{% url 'core-core_history' core.id %}" class="btn btn-sm btn-outline-secondary" role="button" aria-pressed="true">Update </a>
+                        <a href="{% url 'core-core_history' core.id %}" class="btn btn-sm btn-outline-secondary" role="button" aria-pressed="true">History </a>
+                        <a href="{% url 'core-core_history_add' core.id %}" class="btn btn-sm btn-outline-secondary" role="button" aria-pressed="true">Add history </a>
 
                     </div>
                       <div>
                           <a href="{% url 'core-core_history' core.id %}" class="btn btn-sm btn-danger btn-outline-secondary" role="button" aria-pressed="true">Delete </a>
                       </div>
-                    <small class="text-muted">9 mins</small>
+<!--                    <small class="text-muted">9 mins</small>-->
                   </div>
                 </div>
               </div>
