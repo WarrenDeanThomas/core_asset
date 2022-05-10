@@ -1,0 +1,120 @@
+    {% extends 'partials/base.html' %}
+    {% block title %}core History Page {% endblock %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+
+
+
+<!--&lt;!&ndash;Tables&ndash;&gt;-->
+<!--<div class="container">-->
+<!--  <div class="row my-4">-->
+<!--    <div class="col-md-4">-->
+<!--        {% for message in messages %}-->
+<!--        {% if message %}-->
+<!--        <div class="alert alert-{{ message.tags}}">-->
+<!--            {{ message }}-->
+<!--        </div>-->
+<!--        {% endif %}-->
+<!--        {% endfor %}-->
+<!--<div class="border bg-white p-3">-->
+<!--<h4>Add Event</h4>-->
+<!--<hr>-->
+<!--<form method="POST" enctype="multipart/form-data">-->
+<!--    {% csrf_token %}-->
+<!--    {{ form|crispy }}-->
+<!--   {{ form1|crispy }}-->
+
+
+
+<!--  <input class="btn btn-success btn-block" type="submit" value="Add core">-->
+<!--</form>-->
+<!-- {% if uploaded_file_url %}-->
+<!--    <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>-->
+<!--  {% endif %}-->
+<!--</div>-->
+
+    <div class=" offset-2 col-md-8 justify-content-center">
+            <table class="table bg-white table-borderless">
+
+              <tbody>
+                <tr>
+                  <th>Owner</th>
+                  <td>{{ cores.owner }}</td>
+
+                </tr>
+                <tr>
+                  <th>Type</th>
+                  <td>{{ cores.type }}</td>
+
+                </tr>
+                <tr>
+                  <th>Name</th>
+                  <td>{{ cores.name }}</td>
+
+                </tr>
+                <tr>
+                  <th>Sex</th>
+                  <td>{{ cores.sex }}</td>
+
+                </tr>
+                <tr>
+                  <th>Description</th>
+                  <td>{{ cores.description }}</td>
+
+                </tr>
+                <tr>
+                  <th>Date of birth</th>
+                  <td>{{ cores.date_of_birth }}</td>
+
+                </tr>
+                             <tr>
+                  <th>Chip number</th>
+                  <td>{{ cores.chip_number }}</td>
+
+                </tr>
+                <tr>
+                  <th>Defining Marks</th>
+                  <td>{{ cores.defining_marks }}</td>
+
+                </tr>
+                <tr>
+                  <th>Personality</th>
+                  <td>
+                     {{ cores.personality }}  </td>
+
+                </tr>
+                <tr>
+                  <th>Contact Number 1</th>
+                  <td>{{ cores.contact_number1 }}</td>
+
+                </tr>
+               <tr>
+                  <th>Contact Number 2</th>
+                  <td>{{ cores.contact_number2 }}</td>
+
+                </tr>
+                <tr>
+                  <th>Contact Email</th>
+                  <td>{{ cores.contact_email }}</td>
+
+                </tr>
+                <tr>
+                  <th>Address</th>
+                  <td>{{ cores.address }}</td>
+
+                </tr>
+
+              </tbody>
+            </table>
+    </div>
+  </div>
+
+</div>
+<!--End Tables-->
+
+
+
+{% endblock %}

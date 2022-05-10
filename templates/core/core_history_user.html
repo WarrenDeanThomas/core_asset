@@ -31,6 +31,7 @@
 <!--&lt;!&ndash;  {% endif %}&ndash;&gt;-->
 <!--</div>-->
 <!--    </div>-->
+
     <div class="offset-2 col-md-8 justify-content-center">
       <table class="table caption-top bg-white mt-5 table table-bordered table-striped text-center">
         <caption>core History</caption>
@@ -53,7 +54,7 @@
         {% for core in core_history %}
         {% if core.core.owner == user %}
           <tr>
-            <th scope="row"><a class="btn btn-info btn-sm" href="">View</a></th>
+            <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'core-core_history_detail' core.id %}">View</a></th>
 
               <td>{{ core.id }}</td>
               <td>{{ core.core_id }}</td>
@@ -67,8 +68,8 @@
 <!--              <td>{{ core.mileage }}</td>-->
 <!--              <td>{{ core.main_img }}</td>-->
             <td>
-<!--              <a class="btn btn-info btn-sm" href="{% url 'core-core_update' core.id %}">Edit</a>-->
-<!--              <a class="btn btn-danger btn-sm" href="{% url 'core-core_delete' core.id %}">Delete</a>-->
+              <a class="btn btn-info btn-sm" href="{% url 'core-core_history_update' core.id %}">Edit</a>
+              <a class="btn btn-danger btn-sm" href="{% url 'core-core_history_delete' core.id %}">Delete</a>
             </td>
           </tr>
         {% endif %}

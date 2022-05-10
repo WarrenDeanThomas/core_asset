@@ -10,9 +10,7 @@ from django.contrib.auth.models import User
 from django.core.files import File
 from PIL import Image, ImageDraw
 
-
 import qrcode
-
 
 from django.db import models
 # from django.core.urlresolvers import reverse
@@ -51,14 +49,31 @@ class Core(models.Model):
     contact_number2 = models.CharField(max_length=100, blank=True, null=True)
     contact_email = models.EmailField(max_length=254, blank=True, null=True)
     address = models.TextField(max_length=250, blank=True, null=True)
-    main_img = models.ImageField(default='images/dog.png', upload_to='images/', blank=True, null=True)
+    main_img = models.ImageField(default='images/dog.png', upload_to='images/', editable=True, blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now, null=True)
+
+    # image_height = models.PositiveIntegerField(null=True, blank=True, editable=False, default="300")
+    # image_width = models.PositiveIntegerField(null=True, blank=True, editable=False, default="200")
+    #
+    # def __unicode__(self):
+    #     return "{0}".format(self.main_img)
+    #
+    # def save(self):
+    #     if not self.main_img:
+    #         return
+    #
+    #     super(Core, self).save()
+    #     main_img = Image.open(self.main_img)
+    #     (width, height) = main_img.size
+    #     size = (100, 100)
+    #     main_img = main_img.resize(size, Image.ANTIALIAS)
+    #     main_img.save(self.main_img.path)
 
     class Meta:
         verbose_name_plural = 'Core'  # this is the name that will show in admin, not Products
 
     def __str__(self):
-        return f'{self.name}-{self.owner}' # {self.id}-  # this is what displays in admin
+        return f'{self.name}-{self.owner}'  # {self.id}-  # this is what displays in admin
 
 
 class CoreHistory(models.Model):
@@ -67,9 +82,23 @@ class CoreHistory(models.Model):
     event = models.CharField(max_length=50, null=True)
     event_desc = models.CharField(max_length=250, null=True)
     file = models.FileField(upload_to='documents/', null=True, blank=True)
+    # date_of_event = models.DateField(null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'CoreHistory'  # this is the name that will show in admin, not Products
 
     def __str__(self):
         return f'{self.core} - {self.event}'
+
+
+class CoreReminders(models.Model):
+    core = models.ForeignKey('core.Core', on_delete=models.CASCADE, related_name='core_reminder')
+    activity = models.CharField(max_length=50, null=True)
+    activity_desc = models.CharField(max_length=250, null=True)
+    date_of_activity = models.DateField(blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'CoreReminder'  # this is the name that will show in admin, not Products
+
+    def __str__(self):
+        return f'{self.core} - {self.activity}'

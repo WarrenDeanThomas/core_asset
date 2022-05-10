@@ -63,41 +63,41 @@
                   <td>{{ cores.owner }}</td>
 
                 </tr>
-                <tr>
-                  <th>Type</th>
-                  <td>{{ cores.type }}</td>
+<!--                <tr>-->
+<!--                  <th>Type</th>-->
+<!--                  <td>{{ cores.type }}</td>-->
 
-                </tr>
+<!--                </tr>-->
                 <tr>
                   <th>Name</th>
                   <td>{{ cores.name }}</td>
 
                 </tr>
-                <tr>
-                  <th>Sex</th>
-                  <td>{{ cores.sex }}</td>
+<!--                <tr>-->
+<!--                  <th>Sex</th>-->
+<!--                  <td>{{ cores.sex }}</td>-->
 
-                </tr>
-                <tr>
-                  <th>Description</th>
-                  <td>{{ cores.description }}</td>
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                  <th>Description</th>-->
+<!--                  <td>{{ cores.description }}</td>-->
 
-                </tr>
-                <tr>
-                  <th>Date of birth</th>
-                  <td>{{ cores.date_of_birth }}</td>
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                  <th>Date of birth</th>-->
+<!--                  <td>{{ cores.date_of_birth }}</td>-->
 
-                </tr>
-                             <tr>
-                  <th>Chip number</th>
-                  <td>{{ cores.chip_number }}</td>
+<!--                </tr>-->
+<!--                             <tr>-->
+<!--                  <th>Chip number</th>-->
+<!--                  <td>{{ cores.chip_number }}</td>-->
 
-                </tr>
-                <tr>
-                  <th>Defining Marks</th>
-                  <td>{{ cores.defining_marks }}</td>
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                  <th>Defining Marks</th>-->
+<!--                  <td>{{ cores.defining_marks }}</td>-->
 
-                </tr>
+<!--                </tr>-->
                 <tr>
                   <th>Personality</th>
                   <td>
@@ -127,17 +127,20 @@
 
               </tbody>
             </table>
-<!--            <div>-->
-<!--             <p>URL of this page: {{ request.build_absolute_uri }}</p>-->
+            <div>
+             <p>URL of this page: {{ request.build_absolute_uri }}</p>
 <!--            <p>Site of this page: {{ site }}</p>-->
 
-<!--              {% qr_from_text  link  size=8 border=6 image_format='png' %}-->
-<!--            </div>-->
+              {% qr_from_text  link  size=8 border=6 image_format='png' %}
+            </div>
           </div>
           <div class="col-md-10 align-center offset-1">
             <img class="img-thumbnail" src=' {% qr_from_text  link  size=50 border=6 %}' alt="">
 <!--            <img class="img-thumbnail" src=" {{ user.profile.image.url }}" alt="">-->
           </div>
+            <div>
+                <a class="btn btn-info btn-sm" href="  ">Edit</a>
+            </div>
         </div>
       </div>
 
@@ -152,7 +155,7 @@
 
     {% else %}
 
-{% include 'core/core_details_user.html' %}
+{% include 'core/core_details_user_card.html' %}
 
     {% endif %}
 {% endblock %}

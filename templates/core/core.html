@@ -40,6 +40,8 @@
             <th scope="col">#</th>
               <th scope="col">#</th>
               <th scope="col">#</th>
+               <th scope="col">#</th>
+              <th scope="col">#</th>
               <th scope="col">ID</th>
             <th scope="col">Owner</th>
             <th scope="col">Type</th>
@@ -56,6 +58,8 @@
             <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'core-core_detail' core.id %}">View</a></th>
               <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'core-core_history' core.id %}">History</a></th>
               <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'core-core_history_add' core.id %}">Add History</a></th>
+              <th scope="row"> <a href="{% url 'core-core_reminder' core.id %}" class="btn btn-sm btn-outline-secondary" role="button" aria-pressed="true">Reminders </a></th>
+              <th scope="row"><a href="{% url 'core-core_reminder_add' core.id %}" class="btn btn-sm btn-outline-secondary" role="button" aria-pressed="true">Add Reminder </a></th>
               <td>{{ core.id }}</td>
               <td>{{ core.owner }}</td>
               <td>{{ core.type }}</td>

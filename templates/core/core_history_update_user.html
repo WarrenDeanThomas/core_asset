@@ -1,10 +1,9 @@
-    {% extends 'partials/base.html' %}
-    {% block title %}core History Page {% endblock %}
+
 {% load crispy_forms_tags %}
 
 
 {% block content %}
- {% if user.is_authenticated and user.is_staff and user.is_superuser %}
+
 
 
 <!--Tables-->
@@ -31,11 +30,7 @@
   <input class="btn btn-success btn-block" type="submit" value="Add core">
 </form>
 
-    {% else %}
 
-{% include 'core/core_history_update_user.html' %}
-
-    {% endif %}
 
 
 {% endblock %}

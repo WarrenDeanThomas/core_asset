@@ -1,0 +1,93 @@
+    {% extends 'partials/base.html' %}
+    {% block title %}Core Page {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<!--Tables-->
+<div class="container">
+<!--  <div class="row my-4">-->
+<!--    <div class="col-md-4">-->
+<!--        {% for message in messages %}-->
+<!--        {% if message %}-->
+<!--        <div class="alert alert-{{ message.tags}}">-->
+<!--            {{ message }}-->
+<!--        </div>-->
+<!--        {% endif %}-->
+<!--        {% endfor %}-->
+<!--<div class="border bg-white p-3">-->
+<!--<h4>Add Pet</h4>-->
+<!--<hr>-->
+<!--<form method="POST" enctype="multipart/form-data">-->
+<!--    {% csrf_token %}-->
+
+<!--   {{ form|crispy }}-->
+
+
+<!--  <input class="btn btn-success btn-block" type="submit" value="Add Pet">-->
+<!--</form>-->
+
+<!--</div>-->
+<!--    </div>-->
+    <div class="col-md-12 d-flex justify-content-center">
+      <table class="table caption-top bg-white mt-5 table table-bordered table-striped text-center">
+        <caption>List of cores</caption>
+        <thead class="bg-info">
+          <tr class="text-white">
+            <th scope="col">#</th>
+            <th scope="col">#</th>
+            <th scope="col">#</th>
+            <th scope="col">ID</th>
+            <th scope="col">Owner</th>
+            <th scope="col">Type</th>
+            <th scope="col">Name</th>
+            <th scope="col">Sex</th>
+            <th scope="col">Description</th>
+            <th scope="col">Date Of Birth</th>
+            <th scope="col">Chip Number</th>
+            <th scope="col">Defining Marks</th>
+            <th scope="col">Personality</th>
+            <th scope="col">Contact Number 1</th>
+            <th scope="col">Contact Number 2</th>
+            <th scope="col">Contact Email</th>
+            <th scope="col">Address</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for core in core_data %}
+        {% if core.owner == user %}
+          <tr>
+            <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'core-core_detail' core.id %}">View</a></th>
+            <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'core-core_history' core.id %}">History</a></th>
+            <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'core-core_reminder' core.id %}">Reminders</a></th>
+              <td>{{ core.id }}</td>
+              <td>{{ core.owner }}</td>
+              <td>{{ core.type }}</td>
+              <td>{{ core.name }}</td>
+              <td>{{ core.sex }}</td>
+              <td>{{ core.description}}</td>
+              <td>{{ core.date_of_birth }}</td>
+              <td>{{ core.chip_number }}</td>
+              <td>{{ core.defining_marks }}</td>
+              <td>{{ core.personality }}</td>
+              <td>{{ core.contact_number1 }}</td>
+              <td>{{ core.contact_number2}}</td>
+              <td>{{ core.contact_email}}</td>
+              <td>{{ core.address}}</td>
+<!--              <td>{{ core.main_img }}</td>-->
+            <td>
+              <a class="btn btn-info btn-sm" href="{% url 'core-core_update' core.id %}">Edit</a>
+              <a class="btn btn-danger btn-sm" href="{% url 'core-core_delete' core.id %}">Delete</a>
+            </td>
+          </tr>
+        {% endif %}
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+<!--End Tables-->
+{% endblock %}

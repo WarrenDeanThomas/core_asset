@@ -124,17 +124,17 @@
 
               </tbody>
             </table>
-            <div>
-             <p>URL of this page: {{ request.build_absolute_uri }}</p>
+<!--            <div>-->
+<!--             <p>URL of this page: {{ request.build_absolute_uri }}</p>-->
 <!--            <p>Site of this page: {{ site }}</p>-->
 
-              {% qr_from_text  link  size=8 border=6 image_format='png' %}
-            </div>
-          </div>
-          <div class="col-md-10 align-center offset-1">
-            <img class="img-thumbnail" src=' {% qr_from_text  link  size=50 border=6 %}' alt="">
-<!--            <img class="img-thumbnail" src=" {{ user.profile.image.url }}" alt="">-->
-          </div>
+<!--              {% qr_from_text  link  size=8 border=6 image_format='png' %}-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col-md-10 align-center offset-1">-->
+<!--            <img class="img-thumbnail" src=' {% qr_from_text  link  size=50 border=6 %}' alt="">-->
+<!--&lt;!&ndash;            <img class="img-thumbnail" src=" {{ user.profile.image.url }}" alt="">&ndash;&gt;-->
+<!--          </div>-->
         </div>
       </div>
 
