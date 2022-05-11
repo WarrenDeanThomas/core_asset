@@ -50,7 +50,7 @@ class Core(models.Model):
     contact_email = models.EmailField(max_length=254, blank=True, null=True)
     address = models.TextField(max_length=250, blank=True, null=True)
     main_img = models.ImageField(default='images/dog.png', upload_to='images/', editable=True, blank=True, null=True)
-    created_date = models.DateTimeField(default=timezone.now, null=True)
+    created_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
 
     # image_height = models.PositiveIntegerField(null=True, blank=True, editable=False, default="300")
     # image_width = models.PositiveIntegerField(null=True, blank=True, editable=False, default="200")
@@ -78,11 +78,11 @@ class Core(models.Model):
 
 class CoreHistory(models.Model):
     # owner = models.ForeignKey(User, models.CASCADE, null=True)
-    core = models.ForeignKey('core.Core', on_delete=models.CASCADE, related_name='core')
-    event = models.CharField(max_length=50, null=True)
-    event_desc = models.CharField(max_length=250, null=True)
+    core = models.ForeignKey('core.Core', on_delete=models.CASCADE, null=True, blank=True, related_name='core')
+    event = models.CharField(max_length=50, null=True, blank=True)
+    event_desc = models.CharField(max_length=250, null=True, blank=True)
     file = models.FileField(upload_to='documents/', null=True, blank=True)
-    # date_of_event = models.DateField(null=True, blank=True)
+    # date_of_event = models.DateField(null=True, blank=True, default=timezone.now)
 
     class Meta:
         verbose_name_plural = 'CoreHistory'  # this is the name that will show in admin, not Products
@@ -92,9 +92,9 @@ class CoreHistory(models.Model):
 
 
 class CoreReminders(models.Model):
-    core = models.ForeignKey('core.Core', on_delete=models.CASCADE, related_name='core_reminder')
-    activity = models.CharField(max_length=50, null=True)
-    activity_desc = models.CharField(max_length=250, null=True)
+    core = models.ForeignKey('core.Core', on_delete=models.CASCADE, null=True, blank=True, related_name='core_reminder')
+    activity = models.CharField(max_length=50, null=True, blank=True)
+    activity_desc = models.CharField(max_length=250, null=True, blank=True)
     date_of_activity = models.DateField(blank=True, null=True)
 
     class Meta:
