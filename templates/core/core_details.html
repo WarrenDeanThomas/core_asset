@@ -11,14 +11,14 @@
 
     {% if user.is_authenticated and user.is_staff and user.is_superuser %}
 <!--Tables-->
-<div class="container col-md-6 d-flex justify-content-center">
+<div class="container col-md-8 d-flex justify-content-center">
   <div class="row my-4 ">
 <!--    <div class="col-md-2">-->
 
 
 <!--    </div>-->
 <!--    <div class="col-md-8 offset-2 display:flex ">-->
-       <div class="col-md-12 d-flex justify-content-center ">
+     <div class="col-md-10 d-flex justify-content-center ">
     <div class="card">
 <!--       <div class="card-header bg-danger text-white">-->
       {% if  cores.personality == "Aggressive"  %}
@@ -36,14 +36,14 @@
       </div>
       <div class="card-body ">
         <div class="row">
-          <div class="col-md-8 align-center">
-            <span class="h3">Pet Information Card </span>
+         <div class="col-md-12 align-center ">
+             <h3 >Pet Information Card</h3>
             <hr>
 
 
 
 
-            <div class="col-md-10">
+             <div class="col-md-12 ">
                     {{ core.registration }}
                      <img src="{{ cores.main_img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" />
             </div>
@@ -54,7 +54,7 @@
 <!--                </div>-->
 
 <!--{% qr_from_text "Hello World!" size="m" image_format="png" error_correction="L" %}-->
-
+<div class="col-md-12 ">
             <table class="table bg-white table-borderless">
 
               <tbody>
@@ -127,11 +127,15 @@
 
               </tbody>
             </table>
+    </div>
 <!--            <div>-->
-<!--             <p>URL of this page: {{ request.build_absolute_uri }}</p>-->
+<!--&lt;!&ndash;             <p>URL of this page: {{ request.build_absolute_uri }}</p>&ndash;&gt;-->
 <!--            <p>Site of this page: {{ site }}</p>-->
+<!--                 <p>link url: {{ link }}</p>-->
+<!--                <p>Built card url: {{ card_url }}</p>-->
 
 <!--              {% qr_from_text  link  size=8 border=6 image_format='png' %}-->
+<!--                  {% qr_from_text  card_url  size=8 border=6 image_format='png' %}-->
 <!--            </div>-->
           </div>
           <div class="col-md-10 align-center offset-1">

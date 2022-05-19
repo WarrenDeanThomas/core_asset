@@ -19,45 +19,36 @@
     <div class="col-md-12 ">
       <div class="card">
         <div class="card-header text-white">
-         <h3 class="Stats_hdr">Statistics</h3>
+         <h3 class="Stats_hdr"> Statistics </h3>
         </div>
         <div id="card_row_css" class="card-body">
        <div class="row">
-         <div class="col-md-3">
+         <div class="col-md-4">
            <a class="text-decoration-none text-dark" href="">
              <div class="card my-card shadow text-center p-3">
-               <h4>Users <i class="fa-solid fa-users"></i> </h4>
-               <h3>{{ users_count }}</h3>
+               <h4><i class="fa-solid fa-cat"></i> Number of Pets <i class="fa-solid fa-dog"></i> </h4>
+               <h3>{{ core_count_user }}</h3>
              </div>
            </a>
          </div>
 
-        <div class="col-md-3">
-          <a class="text-decoration-none text-dark" href="{% url 'core-core' %}">
+        <div class="col-md-4">
+          <a class="text-decoration-none text-dark" href="">
             <div class="card my-card shadow text-center p-3">
-              <h4><i class="fa-solid fa-cat"></i> Pets <i class="fa-solid fa-dog"></i> </h4>
-              <h3>{{ cores_count }}</h3>
+              <h4><i class="fa-solid fa-cat"></i> Max Number of Pets <i class="fa-solid fa-dog"></i> </h4>
+              <h3> {{ core_count_pets }}</h3>
             </div>
           </a>
         </div>
-           <div class="col-md-3">
-          <a class="text-decoration-none text-dark" href="{% url 'core-core_history_all' %}">
+           <div class="col-md-4">
+          <a class="text-decoration-none text-dark" href="">
             <div class="card my-card shadow text-center p-3">
-              <h4>Animal History <i class="fa-solid fa-box"></i> </h4>
-              <h3>{{ history_count }}</h3>
+              <h4><i class="fa-solid fa-cat"></i> Licences remaining <i class="fa-solid fa-dog"></i> </h4>
+              <h3>{{ exceeded_max }}</h3>
             </div>
           </a>
         </div>
-           <div class="col-md-3">
-          <a class="text-decoration-none text-dark" href="{% url 'core-core_reminder_all' %}">
-            <div class="card my-card shadow text-center p-3">
-              <h4><i class="fa-solid fa-cat"></i> Reminders <i class="fa-solid fa-calendar"></i> </h4>
-              <h3>{{ reminders_count }}</h3>
-            </div>
-          </a>
         </div>
-
-       </div>
 
         </div>
       </div>

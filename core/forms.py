@@ -2,7 +2,6 @@ from django import forms
 from .models import Core, CoreHistory, CoreReminders
 
 
-
 class DateInput(forms.DateInput):
     input_type = 'date'
 
@@ -21,8 +20,8 @@ class CoreHistoryForm(forms.ModelForm):
     class Meta:
         model = CoreHistory
         # fields = '__all__'
-        fields = ['event', 'event_desc', 'file']
-        # widgets = {'date_of_event': DateInput()}
+        fields = ['event', 'event_desc', 'file', 'date_of_event']
+        widgets = {'date_of_event': DateInput()}
 
 
 class CoreReminderForm(forms.ModelForm):

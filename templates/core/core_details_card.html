@@ -11,14 +11,14 @@
 
     {% if user.is_authenticated and user.is_staff and user.is_superuser %}
 <!--Tables-->
-<div class="container col-md-6 d-flex justify-content-center">
+<div class="container col-md-8 d-flex justify-content-center">
   <div class="row my-4 ">
 <!--    <div class="col-md-2">-->
 
 
 <!--    </div>-->
 <!--    <div class="col-md-8 offset-2 display:flex ">-->
-       <div class="col-md-12 d-flex justify-content-center ">
+       <div class="col-md-10 d-flex justify-content-center ">
     <div class="card">
 <!--       <div class="card-header bg-danger text-white">-->
       {% if  cores.personality == "Aggressive"  %}
@@ -28,24 +28,25 @@
            <div class="card-header bg-warning text-white">
 <!--         <h1>Mild</h1>-->
       {% else %}
-             <div class="card-header bg-info text-white">
+             <div class="card-header bg-info text-white" >
 <!--          <h1>Calm</h1>-->
              {% endif %}
+
                <h1 class="center"> {{ cores.name}} </h1>
-       <h1> Pet Personality - {{ cores.personality }}</h1>
+       <h1 > Pet Personality - {{ cores.personality }}</h1>
       </div>
       <div class="card-body ">
         <div class="row">
-          <div class="col-md-8 align-center">
-            <span class="h3">Pet Information Card </span>
+          <div class="col-md-12 align-center ">
+               <h3 >Pet Information Card</h3>
             <hr>
 
 
 
 
-            <div class="col-md-10">
-                    {{ core.registration }}
-                     <img src="{{ cores.main_img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" />
+            <div class="col-md-12 ">
+
+                     <img src="{{ cores.main_img.url }}" class="img-responsive" style="width: 100%; float: center; " />
             </div>
 
 <!--               <div class="lh-1 text-center">-->
@@ -54,7 +55,7 @@
 <!--                </div>-->
 
 <!--{% qr_from_text "Hello World!" size="m" image_format="png" error_correction="L" %}-->
-
+<div class="col-md-12 ">
             <table class="table bg-white table-borderless">
 
               <tbody>
@@ -127,20 +128,41 @@
 
               </tbody>
             </table>
-            <div>
-             <p>URL of this page: {{ request.build_absolute_uri }}</p>
+    </div>
+            <div class="col-md-12" id="qrcode">
+<!--             <p>URL of this page: {{ request.build_absolute_uri }}</p>-->
 <!--            <p>Site of this page: {{ site }}</p>-->
 
-              {% qr_from_text  link  size=8 border=6 image_format='png' %}
+              {% qr_from_text  link  size=6 border=6 image_format='png' %}
+
             </div>
           </div>
-          <div class="col-md-10 align-center offset-1">
-            <img class="img-thumbnail" src=' {% qr_from_text  link  size=50 border=6 %}' alt="">
-<!--            <img class="img-thumbnail" src=" {{ user.profile.image.url }}" alt="">-->
-          </div>
-            <div>
-                <a class="btn btn-info btn-sm" href="  ">Edit</a>
-            </div>
+<!--          <div class="col-md-10 align-center offset-1">-->
+<!--              <div class="col-md-12 align-center">-->
+<!--           <img class="img-thumbnail" src=' {% qr_from_text  link  size=50 border=6 %}' alt="">-->
+<!--&lt;!&ndash;            <img class="img-thumbnail" src=" {{ user.profile.image.url }}" alt="">&ndash;&gt;-->
+<!--          </div>-->
+
+
+<!--    ##############################################################################################       -->
+<!--            <a href=" " class="btn btn-sm btn-outline-secondary" role="button" aria-pressed="true">Save QR Code </a>-->
+<!--            <div>-->
+<!--                <p>-->
+<!--         &lt;!&ndash; GFG is the name of the-->
+<!--            file to be downloaded&ndash;&gt;-->
+<!--         &lt;!&ndash; In order to run the code,-->
+<!--            the location of the file-->
+<!--            "geeksforgeeks.png" needs to-->
+<!--            be changed to your local directory,-->
+<!--            both the HTML and downloadable file-->
+<!--            needs to be present in the same directory &ndash;&gt;-->
+<!--&lt;!&ndash;         <a href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUgAAAFIAQAAAAAab1qeAAABWUlEQVR42u2aQZbCQAhEeXP/O6OT0FDRjV1ZzfhbjSbW6j+gaJLIT1egRIkSJUqUKP+WMs71PK3j+V1Xj/UTn65vVoZi/eV4oOxzQQ7PLZ5RFA+cGSlRCk+b5xmc9ROe9+OzgWYQn/fr5/GOPlA/XZ7j7/rC302e0z51DX1tuuC5WT8l0XNFa9k9PK18z+yP9KHwtPyoIjHaiYYwPI347NhcKS+WD899P6qW85L3Uz3hafSf2VeGLH5kxefaZspOM3OgwnM331fRnAKaF3uH5y7PFGPPTnt4uvkubb34EP2SuT+q1J7Os2MWnla/NEWzmyW9dQLPrXyfTF8B+gIcnt58KbpT0oYUnsY8pGZ0MfMlGdvBc3t/tHiuCiruDs9df+/S2TeOrxJ4GjxDaqi4PTxdnr2Ff5uVwNOon9KKrv/wozv+Pk+JdKDC0+8/eWoOJUqUKFGi/AfKB9e6R07w8lbPAAAAAElFTkSuQmCC' download="GFG">&ndash;&gt;-->
+<!--         <a href={% qr_from_text  link  size=8 border=6 image_format="png" %}; download="GFGg">-->
+
+<!--             <button type="button">Download</button>-->
+<!--         </a>-->
+<!--            </div>-->
+<!--            ####################################################################################-->
         </div>
       </div>
 

@@ -15,7 +15,7 @@ import qrcode
 from django.db import models
 # from django.core.urlresolvers import reverse
 from django.core.files.uploadedfile import InMemoryUploadedFile
-
+from django.db.models.signals import post_save, pre_save
 # Create your models here.
 
 TYPE = (
@@ -49,7 +49,7 @@ class Core(models.Model):
     contact_number2 = models.CharField(max_length=100, blank=True, null=True)
     contact_email = models.EmailField(max_length=254, blank=True, null=True)
     address = models.TextField(max_length=250, blank=True, null=True)
-    main_img = models.ImageField(default='images/dog.png', upload_to='images/', editable=True, blank=True, null=True)
+    main_img = models.ImageField(default='images/avatar_pet.jpg', upload_to='images/', editable=True, blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
 
     # image_height = models.PositiveIntegerField(null=True, blank=True, editable=False, default="300")
@@ -81,7 +81,9 @@ class CoreHistory(models.Model):
     core = models.ForeignKey('core.Core', on_delete=models.CASCADE, null=True, blank=True, related_name='core')
     event = models.CharField(max_length=50, null=True, blank=True)
     event_desc = models.CharField(max_length=250, null=True, blank=True)
+    date_of_event = models.DateField(blank=True, null=True)
     file = models.FileField(upload_to='documents/', null=True, blank=True)
+    created_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
     # date_of_event = models.DateField(null=True, blank=True, default=timezone.now)
 
     class Meta:
@@ -102,3 +104,38 @@ class CoreReminders(models.Model):
 
     def __str__(self):
         return f'{self.core} - {self.activity}'
+
+
+# Create your models here.
+class Limits(models.Model):
+    owner = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    created_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
+    number_of_pets = models.PositiveSmallIntegerField(default=5, editable=True, blank=True, null=True)
+    paid = models.BooleanField(default=False, blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'Limits'  # this is the name that will show in admin, not Products
+
+    def __str__(self):
+        return f'{self.owner} - {self.number_of_pets}'
+
+
+def create_limit(sender, instance, created, **kwargs):
+
+    if created:
+        Limits.objects.create(owner=instance)
+        print("limit created")
+
+
+post_save.connect(create_limit, sender=User)
+
+
+# def update_limit(sender, instance, created, **kwargs):
+#
+#     if created == False:
+#         instance.limit.save()
+#         print("limit updated")
+#
+#
+# post_save.connect(update_limit, sender=User)
+

@@ -20,10 +20,13 @@ urlpatterns = [
     path('core_history/<int:pk>/add/', views.core_history_add, name='core-core_history_add'),
 
     path('core_reminder/', views.core_reminder_all, name='core-core_reminder_all'),
+    path('core_reminder_upcoming/', views.core_reminder_week, name='core-core_reminder_week'),
     path('core_reminder/<int:pk>/', views.core_reminder, name='core-core_reminder'),
     path('core_reminder_detail/<int:pk>/', views.core_reminder_detail, name='core-core_reminder_detail'),
     path('core_reminder/<int:pk>/add/', views.core_reminder_add, name='core-core_reminder_add'),
     path('core_reminder_update/<int:pk>/', views.core_reminder_update, name='core-core_reminder_update'),
     path('core_reminder_delete/<int:pk>/', views.core_reminder_delete, name='core-core_reminder_delete'),
+
+    path('core_users/', views.core_users, name='core-core_users'),
 
 ]

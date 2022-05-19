@@ -1,5 +1,4 @@
-
-
+<style></style>
 
     {% block content %}
 
@@ -10,37 +9,51 @@
 
     <main role="main">
 
-      <section class="jumbotron text-center">
-        <div class="container">
-          <h1 class="jumbotron-heading">Pet Album</h1>
+      <section id="banner" class="jumbotron text-center" >
+        <div class="container" id="jumbo" >
+          <h1 class="jumbotron-heading" >Pet Album</h1>
           <p class="lead text-muted">See an album of all your pets below. You can view each one individually, see their medical history, or capture a new item. Add your pet now.</p>
           <p>
-            <a href="{% url 'core-core' %}" class="btn btn-primary my-2">Capture your pets details</a>
+            <a href="{% url 'core-core' %}" id="btnPetDetails" class="btn btn-primary my-2 " >Capture your pets details</a>
             <a href="{% url 'core-core_data' %}" class="btn btn-secondary my-2">See Pet Data </a>
-          </p>
+
+
+<!--              <p> Count of Pets = {{ core_count_user }}  </p>-->
+<!--            <p>Owner - {{ user }}</p>-->
+<!--            <p>Max pets = {{ core_count_pets }} </p>-->
+<!--            <p>Number of pets left that can be loaded - {{ exceeded_max }}</p>-->
+
+<!--            {% if  exceeded_max  > 0 %}-->
+<!--            "hello"-->
+<!--            {% else %}-->
+<!--            "goodbye"-->
+<!--            {% endif %}-->
+
+ {% include 'partials/topnav_user.html' %}
+
         </div>
       </section>
 
-      <div class="album py-5 bg-light">
-        <div class="container">
+      <div id="album_css" class="album py-5 ">
+        <div id="card_background" class="container">
 
-          <div class="row">
+          <div class="row py-4">
               {% for core in cores %}
               {% if core.owner == user %}
             <div class="col-md-4">
               <div class="card mb-4 box-shadow">
                   <h1>{{ core.name }}</h1>
-                  <img src="{{ core.main_img.url }}" class="img-responsive img-thumbnail" style="width: 100% height:100%; float: left; margin-right: 10px;" />
+                  <img src="{{ core.main_img.url }}" class="img-responsive img-thumbnail" style="width: 100% height:100%; float: left;" />
 <!--                  <img class="card-img-top" data-src="{{ 'core.main_img.url' }}" alt="Card image cap">-->
                 <div class="card-body">
                   <p class="card-text">{{ core.description }}</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                        <a href="{% url 'core-core_detail_card' core.id %}" class="btn btn-sm btn-outline-primary" role="button" aria-pressed="true">View </a>
-                        <a href="{% url 'core-core_history' core.id %}" class="btn btn-sm btn-outline-secondary" role="button" aria-pressed="true">History </a>
-                        <a href="{% url 'core-core_history_add' core.id %}" class="btn btn-sm btn-outline-secondary" role="button" aria-pressed="true">Add history </a>
-                        <a href="{% url 'core-core_reminder' core.id %}" class="btn btn-sm btn-outline-secondary" role="button" aria-pressed="true">Reminders </a>
-                        <a href="{% url 'core-core_reminder_add' core.id %}" class="btn btn-sm btn-outline-secondary" role="button" aria-pressed="true">Add Reminder </a>
+                        <a href="{% url 'core-core_detail_card' core.id %}" class="btn btn_css btn-sm btn-outline-primary" role="button" aria-pressed="true">View </a>
+<!--                        <a href="{% url 'core-core_history' core.id %}" class="btn btn-sm btn-outline-secondary" role="button" aria-pressed="true">History </a>-->
+                        <a href="{% url 'core-core_history_add' core.id %}" class="btn btn_css btn-sm btn-outline-secondary" role="button" aria-pressed="true">Add history </a>
+<!--                        <a href="{% url 'core-core_reminder' core.id %}" class="btn btn-sm btn-outline-secondary" role="button" aria-pressed="true">Reminders </a>-->
+                        <a href="{% url 'core-core_reminder_add' core.id %}" class="btn btn_css btn-sm btn-outline-secondary" role="button" aria-pressed="true">Add Reminder </a>
 
                     </div>
 <!--                      <div>-->

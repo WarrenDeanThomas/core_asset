@@ -1,15 +1,119 @@
-body{
-   background-color: rgb(230, 227, 227);
 
+/* - colour palette
+white - #FFFFFE
+pink - #EEBBC3 - rgb(238, 187, 195)
+purple - #BBC1EC
+dark - #232946
+*/
+
+/*================================  Start colors ====================================================================*/
+body{
+   background-color: #232946;
 }
+
+.navbar{
+   background-color: #232946;
+   margin-bottom:10px!important;
+   padding-bottom: 5px!important;
+}
+
+/*.navbar-toggler{ background-color:#232946; border-color:#FFFFFE;}
+
+.navbar-toggler-icon{color: #BBC1EC;}
+
+.custom-toggler.navbar-toggler {
+  border-color:#BBC1EC;
+}*/
+
+
+.fancy-toggler.navbar-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(238, 187, 195)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.fancy-toggler.navbar-toggler {
+  border-color: #BBC1EC;
+}
+
+.fancy-toggler.navbar-toggler:focus {
+  outline-color: #EEBBC3;
+  }
+
+.jumbotron{color: black;}
+
+/* Inner jumbotron area */
+
+#jumbo    {background-color: #BBC1EC;
+           padding: 1px!important;
+          /* margin-top:5px!important;*/
+           margin-bottom: 1px!important;}
+
+/* Banner around jumbotron area */
+#banner {background-color: #232946;
+        padding: 1px!important;
+        margin-top: 1px!important;
+        margin-bottom: 1px!important;}
+
+/* Area for album cards */
+#album_css {background-color: #232946;
+        margin-top: 1px!important;
+         padding-top: 25px!important;
+      }
+
+#album_css_admin {background-color: #BBC1EC;}
+
+/*this is in topnav*/
+#card_row_css {background-color:#EEBBC3;}
+
+/* Area behind cards */
+#card_background {background-color: #BBC1EC;}
+
+.card-header{background-color: #BBC1EC;}
+
+
+thead {background-color: #BBC1EC;}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited, .btn-info {
+    background-color: #EEBBC3 !important;
+}
+
+/*================================= end colors ====================================================================*/
+
+
+/* rgb(230, 227, 227) */
 
 .my-card:hover{
     transform: scale(1.1);
     transition: 0.2s ease-in-out;
 }
 
+
+
 .card-img-top {
     width: 100%;
     height: 15vw;
     object-fit: cover;
 }
+
+
+
+h1   {color: black;
+      text-align:center;}
+p    {color: black;}
+h3 {text-align:center;}
+
+#qrcode {
+  text-align:center;
+}
+
+table {overflow-x: scroll;}
+
+.table_wrapper{
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.btn_css { margin-right: 10px;}
+
+#Stats_hdr {color: black;}
+

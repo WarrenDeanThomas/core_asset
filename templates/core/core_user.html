@@ -20,15 +20,22 @@
    {{ form|crispy }}
 
 
-  <input class="btn btn-success btn-block" type="submit" value="Add Pet">
+<!--  <input class="btn btn-success btn-block" type="submit" value="Add Pet">-->
+               {% if  exceeded_max  > 0 %}
+          <input class="btn btn-success btn-block" type="submit" value="Add Pet">
+            {% else %}
+            <input class="btn btn-danger btn-block" type="" value="Max Number of pets reached">
+            {% endif %}
 </form>
-
+<!--<p>Count of Pets = {{ core_count_user }}</p>-->
+    <p>Number of pets left - {{ exceeded_max }}</p>
 </div>
     </div>
     <div class="col-md-8">
-      <table class="table caption-top bg-white">
+        <table class="table caption-top bg-white">
         <caption>List of cores</caption>
-        <thead class="bg-info">
+        <thead>
+<!--        <thead class="bg-info">-->
           <tr class="text-white">
             <th scope="col">#</th>
               <th scope="col">#</th>

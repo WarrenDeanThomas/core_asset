@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views import generic
 
-from .models import Core, CoreHistory, CoreReminders
+from .models import Core, CoreHistory, CoreReminders, Limits
 from .forms import CoreForm, CoreHistoryForm, CoreReminderForm
 from django.contrib import messages
 from qr_code.qrcode.utils import QRCodeOptions
@@ -19,7 +19,9 @@ from django.shortcuts import render
 from qr_code.qrcode.utils import MeCard, VCard, EpcData, WifiConfig, Coordinates, QRCodeOptions
 from django.shortcuts import get_object_or_404
 import mimetypes
-
+from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from datetime import date, timedelta
 
 # from sqlalchemy.orm import sessionmaker
 # Session = sessionmaker(bind = engine)
@@ -30,15 +32,31 @@ import mimetypes
 def index(request):
     core = Core.objects.all()
     core_count = core.count()
+    core_count_user = Core.objects.filter(owner_id=request.user).count()
     history_count = CoreHistory.objects.all().count()
     reminders_count = CoreReminders.objects.all().count()
     users_count = User.objects.all().count()
+    core_count_pets_data = Limits.objects.filter(owner_id=request.user)
+    core_count_pets = core_count_pets_data[0].number_of_pets
+    pet_total = core_count_user
+    pet_max = core_count_pets
+    exceeded_max = pet_max-pet_total
+    # exceeded_max_pets = if(pet_max - exceeded_max) > 0, 1, 0
+
+    # core_count_pets = Limits.objects.select_related('profile').values('number_of_pets').values
+    # core_count_pets = Limits.objects.get('number_of_pets')[0]
     context = {
         'cores': core,
         'cores_count': core_count,
         'history_count': history_count,
         'reminders_count': reminders_count,
-        'users_count': users_count
+        'users_count': users_count,
+        'core_count_user': core_count_user,
+        'core_count_pets': core_count_pets,
+        'pet_total': pet_total,
+        'pet_max': pet_max,
+        'exceeded_max': exceeded_max
+        # 'exceeded_max_pets': exceeded_max_pets
     }
     # return HttpResponse('This is the staff page')
     return render(request, 'core/index.html', context)
@@ -60,12 +78,16 @@ def indexuser(request):
     return render(request, 'core/index_user.html')
 
 
+@login_required
 def core(request):
     cores = Core.objects.all()
     cores_count = cores.count()
-
-    # orders_count = Order.objects.all().count()
-    # products_count = Product.objects.all().count()
+    core_count_user = Core.objects.filter(owner_id=request.user).count()
+    core_count_pets_data = Limits.objects.filter(owner_id=request.user)
+    core_count_pets = core_count_pets_data[0].number_of_pets
+    pet_total = core_count_user
+    pet_max = core_count_pets
+    exceeded_max = pet_max - pet_total
     if request.method == 'POST':
         form = CoreForm(request.POST, request.FILES)
         if form.is_valid():
@@ -81,7 +103,14 @@ def core(request):
     context = {
         'cores': cores,
         'cores_count': cores_count,
+        'core_count_user': core_count_user,
+        'core_count_pets': core_count_pets,
+        'pet_total': pet_total,
+        'pet_max': pet_max,
+        'exceeded_max': exceeded_max,
         'form': form
+
+        # 'owner': owner
         # 'orders_count': orders_count,
         # 'products_count': products_count
     }
@@ -135,18 +164,22 @@ def save_qr_from_url(model, url):
 #     return response
 
 
+@login_required
 def core_detail(request, pk):
     cores = Core.objects.get(id=pk)
-    context = {'cores': cores, 'link': request.build_absolute_uri, 'site': get_current_site(request)}
+    card_url = f"{get_current_site(request)}/core_detail_card/{cores.id}"
+    context = {'cores': cores, 'link': request.build_absolute_uri, 'site': get_current_site(request), "card_url": card_url}
     return render(request, 'core/core_details.html', context)
 
 
 def core_detail_card(request, pk):
     cores = Core.objects.get(id=pk)
-    context = {'cores': cores, 'link': request.build_absolute_uri, 'site': get_current_site(request)}
+    card_url = f"{get_current_site(request)}/core_detail_card/{cores.id}"
+    context = {'cores': cores, 'link': request.build_absolute_uri, 'site': get_current_site(request), "card_url": card_url}
     return render(request, 'core/core_details_card.html', context)
 
 
+@login_required
 def core_delete(request, pk):
     item = Core.objects.get(id=pk)
     if request.method == 'POST':
@@ -156,6 +189,7 @@ def core_delete(request, pk):
     return render(request, 'core/core_delete.html')
 
 
+@login_required
 def core_update(request, pk):
     item = Core.objects.get(id=pk)
     if request.method == 'POST':
@@ -197,6 +231,7 @@ def core_update(request, pk):
 #     return render(request, 'core/cores.html', context)
 
 
+@login_required
 def core_data(request):
     core_data = Core.objects.all()
     # core_history_count = core_history_all.count()
@@ -204,6 +239,7 @@ def core_data(request):
     return render(request, 'core/core_user_data.html', context)
 
 
+@login_required
 def core_history_all(request):
     core_history_all = CoreHistory.objects.all()
     core_history_count = core_history_all.count()
@@ -211,6 +247,7 @@ def core_history_all(request):
     return render(request, 'core/core_history_all.html', context)
 
 
+@login_required
 def core_history_detail(request, pk):
     core_history_all_id = CoreHistory.objects.get(id=pk)
     context = {
@@ -220,6 +257,7 @@ def core_history_detail(request, pk):
     return render(request, 'core/core_history_all.html', context)
 
 
+@login_required
 def core_history(request, pk):
     # core_history = CoreHistory.objects.filter(core_id=pk)
     # core_history = session.query(CoreHistory).join(Core).filter(core_id=pk)
@@ -253,6 +291,7 @@ def core_history(request, pk):
     return render(request, 'core/core_history.html', context)
 
 
+@login_required
 def core_history_add(request, pk):
     # core = request.cores
     core = get_object_or_404(Core, pk=pk)
@@ -277,6 +316,7 @@ def core_history_add(request, pk):
     return render(request, 'core/core_history_add.html', context)
 
 
+@login_required
 def core_history_update(request, pk):
     item = CoreHistory.objects.get(id=pk)
     if request.method == 'POST':
@@ -294,6 +334,7 @@ def core_history_update(request, pk):
     return render(request, 'core/core_history_update.html', context)
 
 
+@login_required
 def core_history_delete(request, pk):
     item = CoreHistory.objects.get(id=pk)
     if request.method == 'POST':
@@ -303,6 +344,7 @@ def core_history_delete(request, pk):
     return render(request, 'core/core_history_delete.html')
 
 
+@login_required
 def core_reminder_all_id(request, pk):
     core_reminders_all = CoreReminders.objects.get(id=pk)
     context = {
@@ -312,13 +354,37 @@ def core_reminder_all_id(request, pk):
     return render(request, 'core/core_reminder_all.html', context)
 
 
+@login_required
 def core_reminder_all(request):
     core_reminder_all = CoreReminders.objects.all()
     core_reminder_all_count = core_reminder_all.count()
-    context = {'core_reminder_all': core_reminder_all, 'core_reminder_all_count': core_reminder_all_count}
-    return render(request, 'core/core_history_all.html', context)
+
+    context = {'core_reminder_all': core_reminder_all, 'core_reminder_all_count': core_reminder_all_count }
+    return render(request, 'core/core_reminder_all.html', context)
 
 
+@login_required
+def core_reminder_week(request):
+    current_date = date.today()
+    future_date = current_date + timedelta(days=7)
+    core_reminder_all = CoreReminders.objects.all()
+    core_reminder_week = core_reminder_all.filter(
+        date_of_activity__range=(current_date, future_date),
+    )
+    core_reminder_all_count = core_reminder_all.count()
+    core_reminder_week_count = core_reminder_week.count()
+    context = {'core_reminder_all': core_reminder_all, 'core_reminder_all_count': core_reminder_all_count,
+               'core_reminder_week': core_reminder_week, 'core_reminder_week_count': core_reminder_week_count}
+    return render(request, 'core/core_reminder_upcoming_events.html', context)
+
+
+
+
+
+
+
+
+@login_required
 def core_reminder_detail(request, pk):
     core_reminders_detail = CoreReminders.objects.get(id=pk)
     # core_reminders_count = core_reminders_detail.count()
@@ -326,6 +392,7 @@ def core_reminder_detail(request, pk):
     return render(request, 'core/core_reminder_all.html', context)
 
 
+@login_required
 def core_reminder(request, pk):
     core_reminder = CoreReminders.objects.filter(core_id=pk).select_related('core')
     core_reminder_count = CoreReminders.objects.all().count()
@@ -355,6 +422,7 @@ def core_reminder(request, pk):
     return render(request, 'core/core_reminder.html', context)
 
 
+@login_required
 def core_reminder_add(request, pk):
     # core = request.cores
     core = get_object_or_404(Core, pk=pk)
@@ -379,6 +447,7 @@ def core_reminder_add(request, pk):
     return render(request, 'core/core_reminder_add.html', context)
 
 
+@login_required
 def core_reminder_update(request, pk):
     item = CoreReminders.objects.get(id=pk)
     if request.method == 'POST':
@@ -396,6 +465,7 @@ def core_reminder_update(request, pk):
     return render(request, 'core/core_reminder_update.html', context)
 
 
+@login_required
 def core_reminder_delete(request, pk):
     item = CoreReminders.objects.get(id=pk)
     if request.method == 'POST':
@@ -403,3 +473,14 @@ def core_reminder_delete(request, pk):
         return redirect('core-core_reminder', pk=item.core_id)
 
     return render(request, 'core/core_reminder_delete.html')
+
+
+@login_required
+def core_users(request):
+    # User = get_user_model()
+    # users = User.object.all()
+    core_users = User.objects.all()
+    all_users = User.objects.values()
+
+    context = {'core_users': core_users, 'all_users': all_users}
+    return render(request, 'core/core_user.html', context)

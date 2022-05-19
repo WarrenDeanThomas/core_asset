@@ -1,12 +1,13 @@
+
     <!--NAVBAR-->
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-info">
+    <nav id="nav_css" class="navbar navbar-expand-lg ">
         {% if user.is_authenticated %}
         <div class="container">
-        <a class="navbar-brand text-white" href="{% url 'core-index' %}">FCS Pet Management Solution</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+        <a class="navbar-brand text-white" href="{% url 'core-index' %}">PETZ smart vault</a>
+       <button class="fancy-toggler navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon bg-light"></span>
+    </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">

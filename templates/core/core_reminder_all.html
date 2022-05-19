@@ -1,6 +1,6 @@
     {% extends 'partials/base.html' %}
-    {% block title %}core History Page {% endblock %}
-{% load crispy_forms_tags %}
+    {% block title %}core Reminders Page {% endblock %}
+
 
 
 {% block content %}
@@ -8,42 +8,17 @@
     {% if user.is_authenticated and user.is_staff and user.is_superuser %}
 
 
-<!--&lt;!&ndash;Tables&ndash;&gt;-->
-<!--<div class="container">-->
-<!--  <div class="row my-4">-->
-<!--    <div class="col-md-4">-->
-<!--        {% for message in messages %}-->
-<!--        {% if message %}-->
-<!--        <div class="alert alert-{{ message.tags}}">-->
-<!--            {{ message }}-->
-<!--        </div>-->
-<!--        {% endif %}-->
-<!--        {% endfor %}-->
-<!--<div class="border bg-white p-3">-->
-<!--<h4>Add Event</h4>-->
-<!--<hr>-->
-<!--<form method="POST" enctype="multipart/form-data">-->
-<!--    {% csrf_token %}-->
-<!--    {{ form|crispy }}-->
-<!--   {{ form1|crispy }}-->
-
-
-
-<!--  <input class="btn btn-success btn-block" type="submit" value="Add core">-->
-<!--</form>-->
-<!-- {% if uploaded_file_url %}-->
-<!--    <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>-->
-<!--  {% endif %}-->
-<!--</div>-->
 
     <div class=" offset-2 col-md-8 justify-content-center">
       <table class="table caption-top bg-white mt-5 table table-bordered table-striped text-center">
         <caption>core Reminder</caption>
-        <thead class="bg-info">
-          <tr class="text-white">
+<!--        <thead class="bg-info">-->
+        <thead>
+         <tr class="text-white">
             <th scope="col">#</th>
               <th scope="col">ID</th>
               <th scope="col">Owner ID</th>
+              <th scope="col">Owner </th>
               <th scope="col">Owner </th>
             <th scope="col">Activity</th>
               <th scope="col">Activity Description</th>
@@ -54,7 +29,7 @@
           </tr>
         </thead>
         <tbody>
-        {% for core in core_reminders_all %}
+        {% for core in core_reminder_all %}
 
           <tr>
                <th scope="row"><a class="btn btn-info btn-sm" href="">View</a></th>
@@ -71,8 +46,8 @@
 <!--              <td>{{ core.mileage }}</td>-->
 <!--              <td>{{ core.main_img }}</td>-->
             <td>
-              <a class="btn btn-info btn-sm" href="{% url 'core-core_reminder' core.core_id %}">Edit</a>
-<!--              <a class="btn btn-danger btn-sm" href="{% url 'core-core_delete' core.id %}">Delete</a>-->
+              <a class="btn btn-info btn-sm" href="{% url 'core-core_reminder_update' core.id %}">Edit</a>
+              <a class="btn btn-danger btn-sm" href="{% url 'core-core_reminder_delete' core.id %}">Delete</a>
             </td>
           </tr>
 
@@ -84,9 +59,9 @@
 
 </div>
 <!--End Tables-->
-    {% else %}
+<!--    {% else %}-->
 
-{% include 'core/core_reminder_user.html' %}
+<!--{% include 'core/core_reminder_user.html' %}-->
 
     {% endif %}
 

@@ -1,120 +1,61 @@
     {% extends 'partials/base.html' %}
     {% block title %}core History Page {% endblock %}
-{% load crispy_forms_tags %}
-
 
 {% block content %}
+     {% if user.is_authenticated and user.is_staff and user.is_superuser %}
+<!--Tables-->
 
+    <div class="offset-2 col-md-8 justify-content-center">
+      <table class="table caption-top bg-white mt-5 table table-bordered table-striped text-center">
+        <caption>core History</caption>
+        <thead>
+<!--        <thead class="bg-info">-->
+          <tr class="text-white">
+            <th scope="col">#</th>
+              <th scope="col">ID</th>
+              <th scope="col">Owner ID</th>
+              <th scope="col">Owner </th>
+            <th scope="col">Name</th>
+              <th scope="col">Event</th>
+              <th scope="col">Description</th>
+            <th scope="col">File</th>
+              <th scope="col">Date</th>
+<!--              <th scope="col">Mileage</th>-->
+<!--              <th scope="col">Photo</th>-->
+              <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for core in core_history_all %}
 
+          <tr>
+            <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'core-core_history_detail' core.id %}">View</a></th>
 
+              <td>{{ core.id }}</td>
+              <td>{{ core.core_id }}</td>
+              <td>{{ core.core.owner }}</td>
+            <td>{{ core.core.name }}</td>
+              <td>{{ core_history_all.event }}</td>
+            <td>{{ core.event_desc }}</td>
+            <td>{{ core.file }}</td>
+              <td>{{ core.date_of_event }}</td>
+<!--              <td>{{ core.core_history.id }}</td>-->
+<!--              <td>{{ core.registration }}</td>-->
+<!--              <td>{{ core.mileage }}</td>-->
+<!--              <td>{{ core.main_img }}</td>-->
+            <td>
+              <a class="btn btn-info btn-sm" href="{% url 'core-core_history_update' core.id %}">Edit</a>
+              <a class="btn btn-danger btn-sm" href="{% url 'core-core_history_delete' core.id %}">Delete</a>
+            </td>
+          </tr>
 
-<!--&lt;!&ndash;Tables&ndash;&gt;-->
-<!--<div class="container">-->
-<!--  <div class="row my-4">-->
-<!--    <div class="col-md-4">-->
-<!--        {% for message in messages %}-->
-<!--        {% if message %}-->
-<!--        <div class="alert alert-{{ message.tags}}">-->
-<!--            {{ message }}-->
-<!--        </div>-->
-<!--        {% endif %}-->
-<!--        {% endfor %}-->
-<!--<div class="border bg-white p-3">-->
-<!--<h4>Add Event</h4>-->
-<!--<hr>-->
-<!--<form method="POST" enctype="multipart/form-data">-->
-<!--    {% csrf_token %}-->
-<!--    {{ form|crispy }}-->
-<!--   {{ form1|crispy }}-->
-
-
-
-<!--  <input class="btn btn-success btn-block" type="submit" value="Add core">-->
-<!--</form>-->
-<!-- {% if uploaded_file_url %}-->
-<!--    <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>-->
-<!--  {% endif %}-->
-<!--</div>-->
-
-    <div class=" offset-2 col-md-8 justify-content-center">
-            <table class="table bg-white table-borderless">
-
-              <tbody>
-                <tr>
-                  <th>Owner</th>
-                  <td>{{ cores.owner }}</td>
-
-                </tr>
-                <tr>
-                  <th>Type</th>
-                  <td>{{ cores.type }}</td>
-
-                </tr>
-                <tr>
-                  <th>Name</th>
-                  <td>{{ cores.name }}</td>
-
-                </tr>
-                <tr>
-                  <th>Sex</th>
-                  <td>{{ cores.sex }}</td>
-
-                </tr>
-                <tr>
-                  <th>Description</th>
-                  <td>{{ cores.description }}</td>
-
-                </tr>
-                <tr>
-                  <th>Date of birth</th>
-                  <td>{{ cores.date_of_birth }}</td>
-
-                </tr>
-                             <tr>
-                  <th>Chip number</th>
-                  <td>{{ cores.chip_number }}</td>
-
-                </tr>
-                <tr>
-                  <th>Defining Marks</th>
-                  <td>{{ cores.defining_marks }}</td>
-
-                </tr>
-                <tr>
-                  <th>Personality</th>
-                  <td>
-                     {{ cores.personality }}  </td>
-
-                </tr>
-                <tr>
-                  <th>Contact Number 1</th>
-                  <td>{{ cores.contact_number1 }}</td>
-
-                </tr>
-               <tr>
-                  <th>Contact Number 2</th>
-                  <td>{{ cores.contact_number2 }}</td>
-
-                </tr>
-                <tr>
-                  <th>Contact Email</th>
-                  <td>{{ cores.contact_email }}</td>
-
-                </tr>
-                <tr>
-                  <th>Address</th>
-                  <td>{{ cores.address }}</td>
-
-                </tr>
-
-              </tbody>
-            </table>
+        {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
 
 </div>
 <!--End Tables-->
-
-
-
+    {% endif %}
 {% endblock %}
