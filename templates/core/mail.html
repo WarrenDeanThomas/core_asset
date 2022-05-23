@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+
+<!-- <p>  Hello {{ user }}, </p>-->
+<!--the current date is {{ core_reminder_week.Owner }} ,-->
+<!--and you have  {{ core_reminder_week_count }} reminders-->
+
+
+<!-- reminder -  {{ data.activity }}-->
+<h1>Upcoming Events</h1>
+
+<p>Hi,</p>
+
+<p>
+This email is just to remind you that your pet has an upcoming event
+in the next 7 days.
+</p>
+
+<p>Please login to the system to check the events by clicking the link below
+and logging in with your username and password</p>
+
+<p>Have a great day further,</p>
+
+<p>The PetzVault team</p>
+
+<hr>
+
+<a href="http://petzsmartvault.pythonanywhere.com/"> Login to the system</a>
+
+
+
+
+{% endblock %}
+</body>
+</html>

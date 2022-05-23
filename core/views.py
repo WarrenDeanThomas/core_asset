@@ -22,6 +22,12 @@ import mimetypes
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from datetime import date, timedelta
+from django.core.mail import get_connection, EmailMultiAlternatives
+from django.core.mail import BadHeaderError, send_mail, EmailMessage
+from django.http import HttpResponse, HttpResponseRedirect
+from django.template.loader import get_template
+
+
 
 # from sqlalchemy.orm import sessionmaker
 # Session = sessionmaker(bind = engine)
@@ -484,3 +490,62 @@ def core_users(request):
 
     context = {'core_users': core_users, 'all_users': all_users}
     return render(request, 'core/core_user.html', context)
+
+
+def send_email(request):
+    all_users = get_user_model().objects.all()
+    emails = [user.email for user in all_users]
+    subject, from_email, to = 'hello', 'EMAIL_HOST_USER', 'to@example.com'
+    text_content = 'This is an important message.'
+    html_content = '<p>This is an <strong>important</strong> message.</p>'
+    msg = EmailMultiAlternatives(subject, text_content,  from_email, emails)
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
+    # current_date = date.today()
+    # future_date = current_date + timedelta(days=7)
+    # core_reminder_all = CoreReminders.objects.all()
+    # core_reminder_week = core_reminder_all.filter(
+    #     date_of_activity__range=(current_date, future_date),
+    # )
+    # core_reminder_all_count = core_reminder_all.count()
+    # core_reminder_week_count = core_reminder_week.count()
+    # subject = "Test subject"
+    # message = f'today is {current_date} and you have {core_reminder_week_count} reminders this week'
+    # from_email = "EMAIL_HOST_USER"
+    # if subject and message and from_email:
+    #     try:
+    #         send_mail(subject, message, from_email, ['warrendeanthomas@gmail.com'])
+    #     except BadHeaderError:
+    #         return HttpResponse('Invalid header found.')
+    #     return HttpResponseRedirect('core-index')
+    # else:
+    #     # In reality we'd use a form class
+    #     # to get proper validation errors.
+    #     return HttpResponse('Make sure all fields are entered and valid.')
+
+def send_email(request):
+    current_date = date.today()
+    future_date = current_date + timedelta(days=7)
+    core_reminder_all = CoreReminders.objects.all()
+    core_reminder_week = core_reminder_all.filter(
+        date_of_activity__range=(current_date, future_date),
+    )
+    core_reminder_all_count = core_reminder_all.count()
+    core_reminder_week_count = core_reminder_week.count()
+    for core in core_reminder_week:
+
+        # if user.is_active and user != request.user:
+            message = EmailMultiAlternatives(
+                subject="Reminder of your Pets upcoming events ",
+                from_email="EMAIL_HOST_USER",
+                to=[core.core.contact_email],
+            )
+            context = {'core_reminder_all': core_reminder_all, 'core_reminder_all_count': core_reminder_all_count,
+                       'core_reminder_week': core_reminder_week, 'core_reminder_week_count': core_reminder_week_count}
+            # html_template = get_template("core/core_reminder_upcoming_events.html").render(context)
+            html_template = get_template("core/mail.html").render(context)
+            message.attach_alternative(html_template, "text/html")
+            message.send()
+        # else:
+        #     return render(request, 'core/index.html')
+

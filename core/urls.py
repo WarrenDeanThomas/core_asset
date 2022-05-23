@@ -29,4 +29,6 @@ urlpatterns = [
 
     path('core_users/', views.core_users, name='core-core_users'),
 
+    path('send_emails/', views.send_email, name='core-core_send_email'),
+
 ]
