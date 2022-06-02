@@ -4,7 +4,7 @@
     <nav id="nav_css" class="navbar navbar-expand-lg ">
         {% if user.is_authenticated %}
         <div class="container">
-        <a class="navbar-brand text-white" href="{% url 'core-index' %}">PETZ smart vault</a>
+        <a class="navbar-brand text-white" href="{% url 'core-index' %}">ASSET Smart Vault</a>
        <button class="fancy-toggler navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon bg-light"></span>
     </button>
@@ -12,7 +12,12 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link text-white" href="{% url 'core-index' %}">Dashboard <span class="sr-only">(current)</span></a>
+              <a class="nav-link text-white" href="{% url 'core-index' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link text-white" href="{% url 'core-core_history_dashboard' %}">Dashboard <span class="sr-only">(current)</span></a>
             </li>
           </ul>
           <ul class="navbar-nav ml-auto">

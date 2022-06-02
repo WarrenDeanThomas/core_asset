@@ -1,0 +1,143 @@
+
+/* - colour palette- PETZ
+white - #FFFFFE
+pink - #F9BC60 - rgb(238, 187, 195)
+purple - #ABD1C6
+dark - #004643
+*/
+
+/* - colour DBC
+white - #FFFFFE
+pink - #F9BC60 - rgb(238, 187, 195)
+purple - #ABD1C6
+dark - #004643
+*/
+
+/* -Orange asset colour palette
+white - #FFFFFE
+gray - #EFF0F3
+Orange - #FF8E3C
+dark pink - #D9376E
+black - #0D0D0D
+*/
+
+/* -green asset colour palette
+white - #EFF0F3
+LIGHT GREEN - #ABD1C6
+LIGHT ORANGE - #F9BC60
+LIGHT RED - #E16162
+DARK GREEN - #004643
+*/
+
+
+/*================================  Start colors ====================================================================*/
+body{
+   background-color: #004643;
+}
+
+.navbar{
+   background-color: #004643;
+   margin-bottom:10px!important;
+   padding-bottom: 5px!important;
+}
+
+/*.navbar-toggler{ background-color:#004643; border-color:#FFFFFE;}
+
+.navbar-toggler-icon{color: #ABD1C6;}
+
+.custom-toggler.navbar-toggler {
+  border-color:#ABD1C6;
+}*/
+
+
+.fancy-toggler.navbar-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(238, 187, 195)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.fancy-toggler.navbar-toggler {
+  border-color: #ABD1C6;
+}
+
+.fancy-toggler.navbar-toggler:focus {
+  outline-color: #F9BC60;
+  }
+
+.jumbotron{color: black;}
+
+/* Inner jumbotron area */
+
+#jumbo    {background-color: #ABD1C6;
+           padding: 1px!important;
+          /* margin-top:5px!important;*/
+           margin-bottom: 1px!important;}
+
+/* Banner around jumbotron area */
+#banner {background-color: #004643;
+        padding: 1px!important;
+        margin-top: 1px!important;
+        margin-bottom: 1px!important;}
+
+/* Area for album cards */
+#album_css {background-color: #004643;
+        margin-top: 1px!important;
+         padding-top: 25px!important;
+      }
+
+#album_css_admin {background-color: #ABD1C6;}
+
+/*this is in topnav*/
+#card_row_css {background-color:#F9BC60;}
+
+/* Area behind cards */
+#card_background {background-color: #ABD1C6;}
+
+.card-header{background-color: #ABD1C6;}
+
+
+thead {background-color: #ABD1C6;}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited, .btn-info {
+    background-color: #F9BC60 !important;
+}
+
+/*================================= end colors ====================================================================*/
+
+
+/* rgb(230, 227, 227) */
+
+.my-card:hover{
+    transform: scale(1.1);
+    transition: 0.2s ease-in-out;
+}
+
+
+
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
+
+
+h1   {color: black;
+      text-align:center;}
+p    {color: black;}
+h3 {text-align:center;}
+
+#qrcode {
+  text-align:center;
+}
+
+table {overflow-x: scroll;}
+
+.table_wrapper{
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.btn_css { margin-right: 10px;}
+
+#Stats_hdr {color: black;}
+

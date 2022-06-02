@@ -21,10 +21,10 @@
        <div class="col-md-10 d-flex justify-content-center ">
     <div class="card">
 <!--       <div class="card-header bg-danger text-white">-->
-      {% if  cores.personality == "Aggressive"  %}
+      {% if  cores.impact == "Critical"  %}
          <div class="card-header bg-danger text-white">
 <!--        <h1>Aggro</h1>-->
-      {% elif cores.personality == "Mild"  %}
+      {% elif cores.impact == "Medium"  %}
            <div class="card-header bg-warning text-white">
 <!--         <h1>Mild</h1>-->
       {% else %}
@@ -33,12 +33,12 @@
              {% endif %}
 
                <h1 class="center"> {{ cores.name}} </h1>
-       <h1 > Pet Personality - {{ cores.personality }}</h1>
+       <h1 > Item Impact - {{ cores.impact }}</h1>
       </div>
       <div class="card-body ">
         <div class="row">
           <div class="col-md-12 align-center ">
-               <h3 >Pet Information Card</h3>
+               <h3 >Information Card</h3>
             <hr>
 
 
@@ -100,9 +100,9 @@
 
 <!--                </tr>-->
                 <tr>
-                  <th>Personality</th>
+                  <th>Impact</th>
                   <td>
-                     {{ cores.personality }}  </td>
+                     {{ cores.impact }}  </td>
 
                 </tr>
                 <tr>
@@ -133,7 +133,8 @@
 <!--             <p>URL of this page: {{ request.build_absolute_uri }}</p>-->
 <!--            <p>Site of this page: {{ site }}</p>-->
 
-              {% qr_from_text  link  size=6 border=6 image_format='png' %}
+              <h1> "ID Card -" </h1>  {% qr_from_text  link  size=6 border=6 image_format='png' %}
+             <h1> "Maintenance Card -" </h1>   {% qr_from_text  card_add_url  size=6 border=6 image_format='png' %}
 
             </div>
           </div>

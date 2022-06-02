@@ -19,37 +19,37 @@ from django.db.models.signals import post_save, pre_save
 # Create your models here.
 
 TYPE = (
-    ('Dog', 'Dog'),
-    ('Cat', 'Cat'),
+    ('Vehicle', 'Vehicle'),
+    ('Power Products', 'Power Products'),
     ('Other', 'Other')
 )
 
 PERSONALITY = (
-    ('Calm', 'Calm'),
-    ('Mild', 'Mild'),
-    ('Aggressive', 'Aggressive')
+    ('Critical', 'Critical'),
+    ('Medium', 'Medium'),
+    ('Low', 'Low')
 )
-SEX = (
-    ('M', 'M'),
-    ('F', 'F')
-)
+# SEX = (
+#     ('M', 'M'),
+#     ('F', 'F')
+# )
 
 
 class Core(models.Model):
     owner = models.ForeignKey(User, models.CASCADE, null=True, related_name='owner')
     type = models.CharField(max_length=100, choices=TYPE, blank=True, null=True)
     name = models.CharField(max_length=100, blank=True, null=True)
-    sex = models.CharField(max_length=100, choices=SEX, blank=True, null=True)
+    # sex = models.CharField(max_length=100, choices=SEX, blank=True, null=True)
     description = models.TextField(max_length=250, blank=True, null=True)
-    date_of_birth = models.DateField(blank=True, null=True)
-    chip_number = models.CharField(max_length=100, blank=True, null=True)
-    defining_marks = models.TextField(max_length=250, blank=True, null=True)
-    personality = models.CharField(max_length=100, choices=PERSONALITY, blank=True, null=True)
+    date_of_purchase = models.DateField(blank=True, null=True)
+    asset_number = models.CharField(max_length=100, blank=True, null=True)
+    # defining_marks = models.TextField(max_length=250, blank=True, null=True)
+    impact = models.CharField(max_length=100, choices=PERSONALITY, blank=True, null=True)
     contact_number1 = models.CharField(max_length=100, blank=True, null=True)
     contact_number2 = models.CharField(max_length=100, blank=True, null=True)
     contact_email = models.EmailField(max_length=254, blank=True, null=True)
     address = models.TextField(max_length=250, blank=True, null=True)
-    main_img = models.ImageField(default='images/avatar_pet.jpg', upload_to='images/', editable=True, blank=True, null=True)
+    main_img = models.ImageField(default='images/avatar.png', upload_to='images/', editable=True, blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
 
     # image_height = models.PositiveIntegerField(null=True, blank=True, editable=False, default="300")
@@ -76,12 +76,23 @@ class Core(models.Model):
         return f'{self.name}-{self.owner}'  # {self.id}-  # this is what displays in admin
 
 
+CATEGORY = (
+    ('Maintenance', 'Maintenance'),
+    ('Repair', 'Repair'),
+    ('Fuel', 'Fuel'),
+    ('Other', 'Other')
+)
+
+
 class CoreHistory(models.Model):
     # owner = models.ForeignKey(User, models.CASCADE, null=True)
     core = models.ForeignKey('core.Core', on_delete=models.CASCADE, null=True, blank=True, related_name='core')
+    category = models.CharField(max_length=100, choices=CATEGORY, blank=True, null=True)
     event = models.CharField(max_length=50, null=True, blank=True)
     event_desc = models.CharField(max_length=250, null=True, blank=True)
     date_of_event = models.DateField(blank=True, null=True)
+    amount = models.IntegerField(blank=True, null=True)
+    km_or_hours = models.IntegerField(blank=True, null=True)
     file = models.FileField(upload_to='documents/', null=True, blank=True)
     created_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
     # date_of_event = models.DateField(null=True, blank=True, default=timezone.now)

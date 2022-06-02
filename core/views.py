@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views import generic
+from django.db.models import Sum
 
 from .models import Core, CoreHistory, CoreReminders, Limits
 from .forms import CoreForm, CoreHistoryForm, CoreReminderForm
@@ -26,6 +27,11 @@ from django.core.mail import get_connection, EmailMultiAlternatives
 from django.core.mail import BadHeaderError, send_mail, EmailMessage
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
+import pandas as pd
+
+from django.db.models import Sum
+from slick_reporting.views import SlickReportView
+from slick_reporting.fields import SlickReportField
 
 
 
@@ -181,7 +187,9 @@ def core_detail(request, pk):
 def core_detail_card(request, pk):
     cores = Core.objects.get(id=pk)
     card_url = f"{get_current_site(request)}/core_detail_card/{cores.id}"
-    context = {'cores': cores, 'link': request.build_absolute_uri, 'site': get_current_site(request), "card_url": card_url}
+    card_add_url = f"{get_current_site(request)}/core_history/{cores.id}/add/"
+    context = {'cores': cores, 'link': request.build_absolute_uri, 'site': get_current_site(request),
+               "card_url": card_url, 'card_add_url': card_add_url}
     return render(request, 'core/core_details_card.html', context)
 
 
@@ -213,30 +221,6 @@ def core_update(request, pk):
     return render(request, 'core/core_update.html', context)
 
 
-# def core_history(request, pk):
-#     core_history = coreHistory.objects.filter(core_id=pk)
-#     # for v in core_history:
-#     #     core_history.save()
-#     if request.method == 'POST':
-#         form = coreHistory(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             event = form.cleaned_data.get('event')
-#             messages.success(request, f'{event} has been added')
-#             return redirect('core-core')
-#     else:
-#         form = coreHistory()
-#     context = {
-#         'core_history': core_history,
-#         # 'cores_count': cores_count,
-#         'form': form
-#         # 'orders_count': orders_count,
-#         # 'products_count': products_count
-#     }
-#     # return HttpResponse('This is the staff page')
-#     return render(request, 'core/cores.html', context)
-
-
 @login_required
 def core_data(request):
     core_data = Core.objects.all()
@@ -251,6 +235,114 @@ def core_history_all(request):
     core_history_count = core_history_all.count()
     context = {'core_history_all': core_history_all, 'core_history_count': core_history_count}
     return render(request, 'core/core_history_all.html', context)
+
+
+@login_required
+def core_history_dashboard(request):
+    #get all data
+    core_history_all = CoreHistory.objects.all()
+    #get data by user
+    core_history_user = CoreHistory.objects.filter(core__owner=request.user)
+    core_history_count = core_history_all.count()
+    #filter by each category
+    count_fuel = core_history_all.filter(category="Fuel").count()
+    count_maintenance = core_history_all.filter(category="Maintenance").count()
+    count_repair = core_history_all.filter(category="Repair").count()
+    count_other = core_history_all.filter(category="Other").count()
+    # filter by each category by user
+    count_fuel_user = core_history_user.filter(category="Fuel").count()
+    count_maintenance_user = core_history_user.filter(category="Maintenance").count()
+    count_repair_user = core_history_user.filter(category="Repair").count()
+    count_other_user = core_history_user.filter(category="Other").count()
+    # get values for the dataset
+    data = CoreHistory.objects.all().values()
+    data_user = core_history_user.values()
+    #create dataframes
+    df = pd.DataFrame(data)
+    df_user = pd.DataFrame(data_user)
+    # add a month column to df
+    df['month'] = pd.DatetimeIndex(df['date_of_event']).month
+    df_user['month'] = pd.DatetimeIndex(df_user['date_of_event']).month
+
+    # df_user['Month'] = pd.DatetimeIndex(df['date_of_event']).month
+    # create lists for columns inDF
+    dfCategory = df.category.tolist()
+    dfCount = df.amount.tolist()
+    # Do a group by category and sum the amount column
+    dfsummary = df.groupby(['category'])['amount'].sum().reset_index()
+    dfsummary_user = df_user.groupby(['category'])['amount'].sum().reset_index()
+    #summary by sum date
+    dfsummary_date = df.groupby(['month'])['amount'].sum().reset_index()
+    dfsummary_user_date = df_user.groupby(['month'])['amount'].sum().reset_index()
+    # summary by count date
+    # dfsummary_date_count = df.groupby(['month'])['event'].count().reset_index()
+    # dfsummary_user_date_count = df_user.groupby(['month'])['event'].count().reset_index()
+    #summary by core - asset
+    dfsummary_core = df.groupby(['core_id'])['amount'].sum().reset_index()
+    dfsummary_user_core = df_user.groupby(['core_id'])['amount'].sum().reset_index()
+
+    # create lists for columns inDF
+    dfcat = dfsummary.category.tolist()
+    dfsum = dfsummary.amount.tolist()
+    dfcat_user = dfsummary_user.category.tolist()
+    dfsum_user = dfsummary_user.amount.tolist()
+    dfcat_date = dfsummary_date.month.tolist()
+    dfsum_date = dfsummary_date.amount.tolist()
+    # dfsum_date_event_count = dfsummary_date_count.event.tolist()
+    # dfsum_date_count = dfsummary_date.amount.tolist()
+    dfcat_user_date = dfsummary_user_date.month.tolist()
+    dfsum_user_date = dfsummary_user_date.amount.tolist()
+    # dfsum_user_date_event_count = dfsummary_user_date_count.event.tolist()
+    # dfsum_user_date_count = dfsummary_user_date.id.tolist()
+    dfcat_core = dfsummary_core.core_id.tolist()
+    dfsum_core = dfsummary_core.amount.tolist()
+    dfcat_user_core = dfsummary_user_core.core_id.tolist()
+    dfsum_user_core = dfsummary_user_core.amount.tolist()
+
+    #These are the totals from above views - we need them for the TOP NAV totals
+    core = Core.objects.all()
+    core_count = core.count()
+    core_count_user = Core.objects.filter(owner_id=request.user).count()
+    history_count = CoreHistory.objects.all().count()
+    reminders_count = CoreReminders.objects.all().count()
+    users_count = User.objects.all().count()
+    core_count_pets_data = Limits.objects.filter(owner_id=request.user)
+    core_count_pets = core_count_pets_data[0].number_of_pets
+    pet_total = core_count_user
+    pet_max = core_count_pets
+    exceeded_max = pet_max-pet_total
+
+    #create a list for the pie chart - this would be easier in a df but showing the manual way
+    category_list = ['Maintenance', 'Repair', 'Fuel', 'Other']
+    category_count = [count_maintenance, count_repair, count_fuel, count_other]
+
+    # create a list for the pie chart - this would be easier in a df but showing the manual way
+    category_list_user = ['Maintenance', 'Repair', 'Fuel', 'Other']
+    category_count_user = [count_maintenance_user, count_repair_user, count_fuel_user, count_other_user]
+
+    # returns {'price__sum': 1000} for example
+    context = {'core_history_all': core_history_all, 'core_history_count': core_history_count,
+               'category_list': category_list, 'category_count': category_count,
+               'category_list_user': category_list_user, 'category_count_user': category_count_user,
+               'dfCategory': dfCategory,
+               'dfCount': dfCount, 'dfcat': dfcat, 'dfsum': dfsum, 'dfcat_user': dfcat_user, 'dfsum_user': dfsum_user,
+               'dfcat_date': dfcat_date, 'dfsum_date': dfsum_date,
+               'dfcat_user_date': dfcat_user_date, 'dfsum_user_date': dfsum_user_date, 'dfcat_core': dfcat_core,
+               'dfsum_core': dfsum_core, 'dfcat_user_core': dfcat_user_core, 'dfsum_user_core': dfsum_user_core,
+               # 'dfsum_date_count': dfsum_date_count, 'dfsum_user_date_count': dfsum_user_date_count,
+               # 'dfsum_date_event_count': dfsum_date_event_count, 'dfsum_user_date_event_count': dfsum_user_date_event_count,
+               'cores': core,
+               'cores_count': core_count,
+               'history_count': history_count,
+               'reminders_count': reminders_count,
+               'users_count': users_count,
+               'core_count_user': core_count_user,
+               'core_count_pets': core_count_pets,
+               'pet_total': pet_total,
+               'pet_max': pet_max,
+               'exceeded_max': exceeded_max,
+               }
+    return render(request, 'core/dashboard.html', context)
 
 
 @login_required

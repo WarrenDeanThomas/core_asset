@@ -12,7 +12,7 @@ class CoreForm(forms.ModelForm):
         # fields = ['type', 'name', 'description', 'main_img']
         fields = '__all__'
         exclude = ['owner']
-        widgets = {'date_of_birth': DateInput()}
+        widgets = {'date_of_purchase': DateInput()}
             # '__all__'
 
 
@@ -20,7 +20,7 @@ class CoreHistoryForm(forms.ModelForm):
     class Meta:
         model = CoreHistory
         # fields = '__all__'
-        fields = ['event', 'event_desc', 'file', 'date_of_event']
+        fields = ['category', 'event', 'event_desc', 'amount', 'km_or_hours', 'file', 'date_of_event']
         widgets = {'date_of_event': DateInput()}
 
 

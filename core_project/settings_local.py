@@ -26,10 +26,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 # SECRET_KEY = os.environ['SECRET_KEY']
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
 
-ALLOWED_HOSTS = ['.pythonanywhere.com']
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = ['127.0.0.1']
+# ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
 
 
 # Application definition
@@ -128,51 +131,50 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # S3 BUCKETS CONFIG
 #
-AWS_S3_HOST = 's3.ap-south-1.amazonaws.com'
-
-AWS_ACCESS_KEY_ID = os.environ.get('django_AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('django_AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = 'asset-smart-vault'
-
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = 'public-read'
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=864000'
-}
-AWS_LOCATION = 'static'
-
-AWS_QUERYSTRING_AUTH = False
-AWS_HEADERS = {
-    'Access-Control-Allow-Origin': '*'
-}
-
-STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
-
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
-
-
+# AWS_S3_HOST = 's3.ap-south-1.amazonaws.com'
+#
+# AWS_ACCESS_KEY_ID = os.environ.get('django_AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = os.environ.get('django_AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = 'asset-smart-vault'
+#
+# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL = 'public-read'
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=864000'
+# }
+# AWS_LOCATION = 'static'
+#
+# AWS_QUERYSTRING_AUTH = False
+# AWS_HEADERS = {
+#     'Access-Control-Allow-Origin': '*'
+# }
+#
+# STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+#
+# MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+#
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+## UNDO BELOW FOR LOCAL VERSION
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-STATIC_ROOT = (BASE_DIR / "asset/")
+#this one normally on, not the one below
+# STATIC_ROOT = (BASE_DIR / "asset/")
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'asset')
+STATIC_ROOT = os.path.join(BASE_DIR, 'asset')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -183,8 +185,10 @@ LOGIN_REDIRECT_URL = 'core-index'
 
 LOGIN_URL = 'user-login'
 
+
 MEDIA_ROOT = (BASE_DIR/'media')
 
+## UNDO BELOW FOR LOCAL VERSION
 MEDIA_URL = '/media/'
 
 SERVE_QR_CODE_IMAGE_PATH = 'qr-code-image/'
@@ -195,3 +199,38 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('Django_EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('Django_EMAIL_HOST_PASSWORD')
+
+
+
+
+'''
+<?xml version="1.0" encoding="UTF-8"?>
+<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+<CORSRule>
+    <AllowedOrigin>*</AllowedOrigin>
+    <AllowedMethod>GET</AllowedMethod>
+    <AllowedMethod>POST</AllowedMethod>
+    <AllowedMethod>PUT</AllowedMethod>
+    <AllowedHeader>*</AllowedHeader>
+</CORSRule>
+</CORSConfiguration>
+
+'''
+'''
+Ok I found the solution. It looks like S3 was not giving bucket access. I edited the bucket policy on AWS S3 to the below:
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowPublicRead",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::bucketname/*"
+        }
+    ]
+}
+'''

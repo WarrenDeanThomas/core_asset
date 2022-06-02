@@ -19,7 +19,7 @@
         {% endif %}
         {% endfor %}
 <div class="border bg-white p-3">
-<h4>Add Pet</h4>
+<h4>Add Item</h4>
 <hr>
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -27,7 +27,7 @@
    {{ form|crispy }}
 
 
-  <input class="btn btn-success btn-block" type="submit" value="Add Pet">
+  <input class="btn btn-success btn-block" type="submit" value="Add Item">
 </form>
 
 </div>

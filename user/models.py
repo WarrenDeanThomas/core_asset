@@ -8,7 +8,7 @@ class Profile(models.Model):
     staff = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     address = models.CharField(max_length=200, null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
-    image = models.ImageField(default='avatar.jpg', upload_to='Profile_Images')
+    image = models.ImageField(default='avatar.png', upload_to='Profile_Images')
     created_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
 
     def __str__(self):

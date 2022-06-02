@@ -1,0 +1,263 @@
+    {% extends 'partials/base.html' %}
+    {% block title %}Home Page {% endblock %}
+
+    {% block content %}
+
+    {% if user.is_authenticated and user.is_staff and user.is_superuser %}
+
+        {% include 'partials/topnav.html' %}
+
+ <!--Graphs-->
+ <div class="container">
+  <div class="row my-5">
+      <div class="col-md-6">
+          <div class="bg-white">
+              <canvas id="myChart1" width="400" height="300"></canvas>
+              <script>
+
+                  var ctx = document.getElementById('myChart1').getContext('2d');
+                  var myChart1 = new Chart(ctx, {
+                      type: 'pie',
+                      data: {
+                          labels: [{% for list in category_list %} '{{ list }}', {% endfor %}],
+                          datasets: [{
+                              label: 'Categories',
+                              data: [{% for count in category_count %} '{{ count }}' , {% endfor %}],
+                              backgroundColor: [
+                                 'rgba(0, 70, 67, 1)',
+                                 'rgba(248, 187, 96, 1)',
+                                  'rgba(0, 19, 16, 1)',
+                                  'rgba(171, 209, 198, 1)',
+                                  'rgba(208, 255, 241, 1)',
+                                  'rgba(171, 129, 66, 1)',
+                                  'rgba(254, 252, 238, 1)',
+                                  'rgba(0, 0, 0, 1)',
+                                  'rgba(76, 76, 76, 1)',
+                                  'rgba(238, 187, 195, 1)',
+                                  'rgba(13, 102, 255, 1)',
+                                  'rgba(25, 19, 64, 1)'
+                              ],
+                              borderColor: [
+                               'rgba(0, 70, 67, 1)',
+                                 'rgba(248, 187, 96, 1)',
+                                  'rgba(0, 19, 16, 1)',
+                                  'rgba(171, 209, 198, 1)',
+                                  'rgba(208, 255, 241, 1)',
+                                  'rgba(171, 129, 66, 1)',
+                                  'rgba(254, 252, 238, 1)',
+                                  'rgba(0, 0, 0, 1)',
+                                  'rgba(76, 76, 76, 1)',
+                                  'rgba(238, 187, 195, 1)',
+                                  'rgba(13, 102, 255, 1)',
+                                  'rgba(25, 19, 64, 1)'
+                              ],
+                              borderWidth: 1
+                          }]
+                      },
+                      options: {
+                          scales: {
+                              yAxes: [{
+                                  ticks: {
+                                      beginAtZero: true
+                                  }
+                              }]
+                          }
+                      }
+                  });
+              </script>
+          </div>
+      </div>
+      <div class="col-md-6">
+          <div class="bg-white">
+              <canvas id="myChart2" width="400" height="400"></canvas>
+              <script>
+                               var dfcat = {{ dfcat|safe }}
+                  var dfsum =   {{ dfsum|safe }}
+                  var ctx = document.getElementById('myChart2').getContext('2d');
+                  var myChart2 = new Chart(ctx, {
+                       type: 'bar',
+                      data: {
+                          labels: dfcat,
+                          datasets: [{
+                              label: 'Total Cost by Category',
+                              data: dfsum,
+
+                              backgroundColor: [
+                             'rgba(0, 70, 67, 1)',
+                                 'rgba(248, 187, 96, 1)',
+                                  'rgba(0, 19, 16, 1)',
+                                  'rgba(171, 209, 198, 1)',
+                                  'rgba(208, 255, 241, 1)',
+                                  'rgba(171, 129, 66, 1)',
+                                  'rgba(254, 252, 238, 1)',
+                                  'rgba(0, 0, 0, 1)',
+                                  'rgba(76, 76, 76, 1)',
+                                  'rgba(238, 187, 195, 1)',
+                                  'rgba(13, 102, 255, 1)',
+                                  'rgba(25, 19, 64, 1)'
+                              ],
+                              borderColor: [
+                           'rgba(0, 70, 67, 1)',
+                                 'rgba(248, 187, 96, 1)',
+                                  'rgba(0, 19, 16, 1)',
+                                  'rgba(171, 209, 198, 1)',
+                                  'rgba(208, 255, 241, 1)',
+                                  'rgba(171, 129, 66, 1)',
+                                  'rgba(254, 252, 238, 1)',
+                                  'rgba(0, 0, 0, 1)',
+                                  'rgba(76, 76, 76, 1)',
+                                  'rgba(238, 187, 195, 1)',
+                                  'rgba(13, 102, 255, 1)',
+                                  'rgba(25, 19, 64, 1)'
+                              ],
+                              borderWidth: 1
+                          }]
+                      },
+                      options: {
+                          scales: {
+                              yAxes: [{
+                                  ticks: {
+                                      beginAtZero: true
+                                  }
+                              }]
+                          }
+                      }
+                  });
+              </script>
+          </div>
+      </div>
+  </div>
+</div>
+<!--End Graphs-->
+
+ <!--Graphs-->
+ <div class="container">
+  <div class="row my-5">
+      <div class="col-md-6">
+          <div class="bg-white">
+              <canvas id="myChart3" width="400" height="300"></canvas>
+              <script>
+
+                  var dfcat_core = {{ dfcat_core|safe }}
+                  var dfsum_core =   {{ dfsum_core|safe }}
+                  var ctx = document.getElementById('myChart3').getContext('2d');
+                  var myChart3 = new Chart(ctx, {
+                       type: 'pie',
+                      data: {
+                          labels: dfcat_core,
+                          datasets: [{
+                              label: 'Total Cost by Month',
+                              data: dfsum_core,
+                              backgroundColor: [
+                                 'rgba(0, 70, 67, 1)',
+                                 'rgba(248, 187, 96, 1)',
+                                  'rgba(0, 19, 16, 1)',
+                                  'rgba(171, 209, 198, 1)',
+                                  'rgba(208, 255, 241, 1)',
+                                  'rgba(171, 129, 66, 1)',
+                                  'rgba(254, 252, 238, 1)',
+                                  'rgba(0, 0, 0, 1)',
+                                  'rgba(76, 76, 76, 1)',
+                                  'rgba(238, 187, 195, 1)',
+                                  'rgba(13, 102, 255, 1)',
+                                  'rgba(25, 19, 64, 1)'
+                              ],
+                              borderColor: [
+                               'rgba(0, 70, 67, 1)',
+                                 'rgba(248, 187, 96, 1)',
+                                  'rgba(0, 19, 16, 1)',
+                                  'rgba(171, 209, 198, 1)',
+                                  'rgba(208, 255, 241, 1)',
+                                  'rgba(171, 129, 66, 1)',
+                                  'rgba(254, 252, 238, 1)',
+                                  'rgba(0, 0, 0, 1)',
+                                  'rgba(76, 76, 76, 1)',
+                                  'rgba(238, 187, 195, 1)',
+                                  'rgba(13, 102, 255, 1)',
+                                  'rgba(25, 19, 64, 1)'
+                              ],
+                              borderWidth: 1
+                          }]
+                      },
+                      options: {
+                          scales: {
+                              yAxes: [{
+                                  ticks: {
+                                      beginAtZero: true
+                                  }
+                              }]
+                          }
+                      }
+                  });
+              </script>
+          </div>
+      </div>
+      <div class="col-md-6">
+          <div class="bg-white">
+              <canvas id="myChart4" width="400" height="400"></canvas>
+              <script>
+                var dfcat_date = {{ dfcat_date|safe }}
+                  var dfsum_date =   {{ dfsum_date|safe }}
+                  var ctx = document.getElementById('myChart4').getContext('2d');
+                  var myChart4 = new Chart(ctx, {
+                       type: 'bar',
+                      data: {
+                          labels: dfcat_date,
+                          datasets: [{
+                              label: 'Total Cost by Month',
+                              data: dfsum_date,
+
+                              backgroundColor: [
+                             'rgba(0, 70, 67, 1)',
+                                 'rgba(248, 187, 96, 1)',
+                                  'rgba(0, 19, 16, 1)',
+                                  'rgba(171, 209, 198, 1)',
+                                  'rgba(208, 255, 241, 1)',
+                                  'rgba(171, 129, 66, 1)',
+                                  'rgba(254, 252, 238, 1)',
+                                  'rgba(0, 0, 0, 1)',
+                                  'rgba(76, 76, 76, 1)',
+                                  'rgba(238, 187, 195, 1)',
+                                  'rgba(13, 102, 255, 1)',
+                                  'rgba(25, 19, 64, 1)'
+                              ],
+                              borderColor: [
+                           'rgba(0, 70, 67, 1)',
+                                 'rgba(248, 187, 96, 1)',
+                                  'rgba(0, 19, 16, 1)',
+                                  'rgba(171, 209, 198, 1)',
+                                  'rgba(208, 255, 241, 1)',
+                                  'rgba(171, 129, 66, 1)',
+                                  'rgba(254, 252, 238, 1)',
+                                  'rgba(0, 0, 0, 1)',
+                                  'rgba(76, 76, 76, 1)',
+                                  'rgba(238, 187, 195, 1)',
+                                  'rgba(13, 102, 255, 1)',
+                                  'rgba(25, 19, 64, 1)'
+                              ],
+                              borderWidth: 1
+                          }]
+                      },
+                      options: {
+                          scales: {
+                              yAxes: [{
+                                  ticks: {
+                                      beginAtZero: true
+                                  }
+                              }]
+                          }
+                      }
+                  });
+              </script>
+          </div>
+      </div>
+  </div>
+</div>
+<!--End Graphs-->
+
+
+    {% else %}
+{% include 'core/dashboard_user.html' %}
+
+    {% endif %}
+    {% endblock %}

@@ -11,13 +11,16 @@
         <thead>
 <!--        <thead class="bg-info">-->
           <tr class="text-white">
-            <th scope="col">#</th>
+<!--            <th scope="col">#</th>-->
               <th scope="col">ID</th>
               <th scope="col">Owner ID</th>
               <th scope="col">Owner </th>
             <th scope="col">Name</th>
+              <th scope="col">Category</th>
               <th scope="col">Event</th>
               <th scope="col">Description</th>
+              <th scope="col">Amount</th>
+               <th scope="col">Kms / Hrs</th>
             <th scope="col">File</th>
               <th scope="col">Date</th>
 <!--              <th scope="col">Mileage</th>-->
@@ -29,14 +32,17 @@
         {% for core in core_history_all %}
 
           <tr>
-            <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'core-core_history_detail' core.id %}">View</a></th>
+<!--            <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'core-core_history_detail' core.id %}">View</a></th>-->
 
               <td>{{ core.id }}</td>
               <td>{{ core.core_id }}</td>
               <td>{{ core.core.owner }}</td>
             <td>{{ core.core.name }}</td>
+              <td>{{ core.category }}</td>
               <td>{{ core_history_all.event }}</td>
             <td>{{ core.event_desc }}</td>
+              <td>{{ core.amount }}</td>
+              <td>{{ core.km_or_hours }}</td>
             <td>{{ core.file }}</td>
               <td>{{ core.date_of_event }}</td>
 <!--              <td>{{ core.core_history.id }}</td>-->
