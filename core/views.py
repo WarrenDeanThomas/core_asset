@@ -244,6 +244,7 @@ def core_history_dashboard(request):
     #get data by user
     core_history_user = CoreHistory.objects.filter(core__owner=request.user)
     core_history_count = core_history_all.count()
+    core_history_count_user = core_history_user.count()
     #filter by each category
     count_fuel = core_history_all.filter(category="Fuel").count()
     count_maintenance = core_history_all.filter(category="Maintenance").count()
@@ -341,6 +342,7 @@ def core_history_dashboard(request):
                'pet_total': pet_total,
                'pet_max': pet_max,
                'exceeded_max': exceeded_max,
+               'core_history_count_user': core_history_count_user,
                }
     return render(request, 'core/dashboard.html', context)
 

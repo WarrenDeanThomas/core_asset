@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
     'storages',
 
+
 ]
 
 MIDDLEWARE = [

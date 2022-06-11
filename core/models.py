@@ -16,6 +16,11 @@ from django.db import models
 # from django.core.urlresolvers import reverse
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models.signals import post_save, pre_save
+
+import json
+import requests
+
+
 # Create your models here.
 
 TYPE = (
@@ -150,3 +155,43 @@ post_save.connect(create_limit, sender=User)
 #
 # post_save.connect(update_limit, sender=User)
 
+
+# Create your models here.
+class Location(models.Model):
+    core = models.ForeignKey('core.CoreHistory', on_delete=models.CASCADE, null=True, blank=True, related_name='core_location')
+    city = models.CharField(max_length=50, null=True, blank=True)
+    country = models.CharField(max_length=50, null=True, blank=True)
+    created_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
+    latitude = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
+    longitude = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'Location'  # this is the name that will show in admin, not Products
+
+    def save(self, *args, **kwargs):
+        # Directly access tuple values
+        ip = requests.get('https://api.ipify.org?format=json')
+        ip_data = json.loads(ip.text)
+        res = requests.get('http://ip-api.com/json/'+ip_data['ip'])
+        location_data_one = res.text
+        location_data = json.loads(location_data_one)
+        self.latitude = location_data["lat"]
+        self.longitude = location_data["lon"]
+        self.city = location_data["city"]
+        self.country = location_data["country"]
+        # self.latitude = self.location[0]
+        # self.longitude = self.location1[1]
+        super(Location, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return f'{self.core}'
+
+
+def create_location(sender, instance, created, **kwargs):
+
+    if created:
+        Location.objects.create(core=instance)
+        print("location created")
+
+
+post_save.connect(create_location, sender=CoreHistory)
